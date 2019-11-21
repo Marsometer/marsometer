@@ -1,13 +1,36 @@
+@import "variables";
+@import "mixins";
+
+// * {
+//     border: 1px solid salmon;
+// }
+
+html {
+  font-size: 125%;
+  text-align: center;
+}
+
 main {
-    height: 90vh;
+  height: 90vh;
 }
 
 .resultsContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 // .hidden {
 //     display: none;
 // }
+
+.visuallyHidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* added line */
+}

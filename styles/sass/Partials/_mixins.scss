@@ -1,2 +1,6 @@
 // Mix-ins, use for media queries and groups you use often
 
+@mixin centerFlexChildren {
+  justify-content: center;
+  align-items: center;
+}

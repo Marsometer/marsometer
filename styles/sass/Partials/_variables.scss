@@ -3,8 +3,9 @@
 @font-face {
   font-family: "outerSpace";
   src: url(../assets/outerSpace.ttf);
-} 
-
-p {
-    font-family: "outerSpace", serif;
 }
+
+$titleFont: "outerSpace";
+$bodyFont: "Space Mono", monospace;
+
+$hightlightColor: #281C3C;

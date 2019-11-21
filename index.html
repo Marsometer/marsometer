@@ -10,23 +10,21 @@
     <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="script.js"></script>
 
     <title>Marsometer</title>
 </head>
 <body>
     <header>
-        <div class="wrapper">
+        <div class="headerContent wrapper">
             <h1>Major Temp 🚀</h1>
-            <p>Ground Control to Major Temp</p>
+            <!-- <p>Ground Control to Major Temp</p> -->
+            <img src="https://media.giphy.com/media/h8mB9WD5K406EM1wn2/giphy.gif" alt="">
             <form action="" class="cityWeather">
-                <label for="cityWeatherInput" name="cityWeather">Enter A City</label>
-                <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city">
-                <button type="submit" name="cityWeather">Commencing Countdown Engines On..</button>
-                <a data-scroll href="#result">asdh</a>
+                <label for="cityWeatherInput" name="cityWeather" class="visuallyHidden">Enter A City</label>
+                <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city" autocomplete="off">
+                <button type="submit" name="cityWeather" class="cityWeatherInput">Commencing Countdown Engines On..</button>
             </form>
-            <p>khjsdfkhjfsdjhkldfshkjfsdhkj</p>
         </div>
     </header>
     <main>
