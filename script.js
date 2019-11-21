@@ -21,40 +21,54 @@ weatherCompare.getMarsWeather = function(){
         // feedtype: `JSON`,
         // api_key: `${marsApi}`
     }).then(function (marsResult){
-        const marsTemperature = marsResult['342'].AT.av;
-        console.log(`It is ${marsTemperature} degrees on Mars`);
+        console.log(marsResult);
+        const marsTemperature = (marsResult['343'].AT.av).toFixed(0);
+
+        let marsTempToAppend = (`It is ${marsTemperature} degrees on Mars`);
+       
+        $('li.marsTemperature').append(marsTempToAppend);
     })
 }
 
 weatherCompare.getCityWeather = function(userCity){
+    weatherCompare.getMarsWeather();
+
     $.ajax({
         url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApi}`,
         method: `GET`,
         dataType: `json`,
     }).then(function(cityResult){
+        let cityName = cityResult.name;
+
         let cityTemperature = parseInt(cityResult.main.temp);
-        let cityTemperatureConverted = (cityTemperature - 273.15)
-        console.log(`It is ${cityTemperature - 273.15} degrees in Toronto`);
+        let cityTemperatureConverted = (cityTemperature - 273);
+
+        let cityTempToAppend = (`It is ${cityTemperatureConverted} degrees in ${cityName}`);
+
+        $('li.cityTemperature').html(cityTempToAppend);
     })
 }
 
 weatherCompare.userCity = function(){
-    $('h1').on("click", function(){
-        // userCity = form.val();
+    $('.cityWeather').on("submit", function(event){
+        event.preventDefault();
+        userCity = $('.cityWeather input').val();
 
-        weatherCompare.getCityWeather("Toronto")
+        if (userCity !== ''){
+            weatherCompare.getCityWeather(userCity)
+        } else {
+            alert("PLZ ENTER A CITY!!!!");
+        }
+
     })
 }
 
 // Start app
 weatherCompare.init = function() {
-    // when(weatherCompare.getMarsWeather, weatherCompare.getCityWeather).done(function( marsWeather, cityWeather ){
-    //     const city = `${cityWeather}`
-    //     const mars = `${marsWeather}`
-
-    //     $('section').html(city/mars/blah blah blah);
+    // $.when(weatherCompare.getMarsWeather, weatherCompare.getCityWeather).done(function( marsWeather, cityWeather ){
+    //     console.log("done");
     // })
-    weatherCompare.getMarsWeather();
+    // weatherCompare.getMarsWeather();
     weatherCompare.userCity();
 }
 
