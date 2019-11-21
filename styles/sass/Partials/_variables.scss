@@ -1,1 +1,10 @@
 // Commonly used colors, fonts, and styles
+
+@font-face {
+  font-family: "outerSpace";
+  src: url(../assets/outerSpace.ttf);
+} 
+
+p {
+    font-family: "outerSpace", serif;
+}

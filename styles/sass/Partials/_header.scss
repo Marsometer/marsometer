@@ -1,0 +1,13 @@
+@import "variables";
+
+header {
+    height: 100vh;
+    background-image: url(../assets/background.jpg);
+    background-size: cover;
+}
+
+h1 {
+    font-family: "outerSpace", serif;
+    font-size: 100px;
+    color: white;
+}

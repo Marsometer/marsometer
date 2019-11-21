@@ -5,46 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./styles/styles.css">
-    <title>Marsometer</title>
-<<<<<<< HEAD
-=======
-</head>
 
-<body>
-    <header>
-        <h1>Major Temp 🚀</h1>
-        <p>Ground Control to Major Temp</p>
-        <form type="submit" class="locationInput">
-            <input type="text">
-            <button type="submit">Commencing Countdown Engines On..</button>
-        </form>
-    </header>
->>>>>>> c89a93663711a50269fb99d27d37360cd2b6e1db
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="script.js"></script>
+
+    <title>Marsometer</title>
 </head>
 <body>
     <header>
-        <h1>Major Temp 🚀</h1>
-        <p>Ground Control to Major Temp</p>
-        <form action="" class="cityWeather">
-            <label for="cityWeatherInput" name="cityWeather">Enter A City</label>
-            <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city">
-            <button type="submit" name="cityWeather">Commencing Countdown Engines On..</button>
-        </form>
-        <ul>
-            <li class="marsTemperature"></li>
-            <li class="cityTemperature"></li>
-            <li class="temperatureCompare"></li>
-        </ul>
+        <div class="wrapper">
+            <h1>Major Temp 🚀</h1>
+            <p>Ground Control to Major Temp</p>
+            <form action="" class="cityWeather">
+                <label for="cityWeatherInput" name="cityWeather">Enter A City</label>
+                <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city">
+                <button type="submit" name="cityWeather">Commencing Countdown Engines On..</button>
+                <a data-scroll href="#result">asdh</a>
+            </form>
+            <p>khjsdfkhjfsdjhkldfshkjfsdhkj</p>
+        </div>
     </header>
     <main>
-
+        <div class="wrapper">
+            <h2>Results</h2>
+            <!-- <div id="result">
+                <ul>
+                    <li class="marsTemperature"></li>
+                    <li class="cityTemperature"></li>
+                    <li class="temperatureCompare"></li>
+                </ul>
+            </div> -->
+            <!-- City Temperatrueasdad -->
+            <div class="resultsContainer">
+                <section> 
+                    <h3>City</h3>
+                    <img src="https://placebear.com/300/450" alt="">
+                    <ul>
+                        <li class="cityAverage"></li>
+                        <li class="cityMax"></li>
+                        <li class="cityMin"></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Difference</h3>
+                    <ul>
+                        <li class="averageTempDifference"></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </section>
+                <!-- Mars temperature -->
+                <section>
+                    <h3>Mars</h3>
+                    <img src="https://placebear.com/300/450" alt="">
+                    <ul>
+                        <li class="marsAverage"></li>
+                        <li class="marsMax"></li>
+                        <li class="marsMin"></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
     </main>
-    <footer>
-
-    </footer>
+    <!-- <footer>
+        <p>Copyright 2019 Marsometer Inc.</p>
+    </footer> -->
 </body>
 
 </html>

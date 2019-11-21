@@ -1,14 +1,13 @@
-
-body {
-    background: black;
-    text-align: center;
-    color: white;
+main {
+    height: 90vh;
 }
 
-h1 {
-    font-size: 100px;
+.resultsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-ul {
-    list-style: none;
-}
+// .hidden {
+//     display: none;
+// }
