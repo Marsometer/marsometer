@@ -1,4 +1,13 @@
-h1 {
-    color: red;
-    font-size: 100px;
+main {
+    height: 90vh;
 }
+
+.resultsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// .hidden {
+//     display: none;
+// }

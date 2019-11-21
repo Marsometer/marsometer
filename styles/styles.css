@@ -235,7 +235,74 @@ html {
   overflow: hidden;
 }
 
+h1,
+h2,
+h3,
+p,
+ul,
+a {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+html {
+  font-family: 'Space Mono', monospace;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@font-face {
+  font-family: "outerSpace";
+  src: url(../assets/outerSpace.ttf);
+}
+
+p {
+  font-family: "outerSpace", serif;
+}
+
+footer {
+  height: 10vh;
+}
+
+@font-face {
+  font-family: "outerSpace";
+  src: url(../assets/outerSpace.ttf);
+}
+
+p {
+  font-family: "outerSpace", serif;
+}
+
+header {
+  height: 100vh;
+  background-image: url(../assets/background.jpg);
+  background-size: cover;
+}
+
 h1 {
-  color: red;
+  font-family: "outerSpace", serif;
   font-size: 100px;
+  color: white;
+}
+
+main {
+  height: 90vh;
+}
+
+.resultsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
