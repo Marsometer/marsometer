@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./styles/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="script.js"></script>
 
@@ -24,47 +25,65 @@
                 <label for="cityWeatherInput" name="cityWeather" class="visuallyHidden">Enter A City</label>
                 <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city" autocomplete="off">
                 <button type="submit" name="cityWeather" class="cityWeatherInput">Commencing Countdown Engines On..</button>
+
             </form>
+            <!-- <a href="#resultsSection">asdjkljasd</a> -->
         </div>
     </header>
-    <main>
+    <!-- Display none -->
+    <main id="resultsSection">
         <div class="wrapper">
             <h2>Results</h2>
-            <!-- <div id="result">
-                <ul>
-                    <li class="marsTemperature"></li>
-                    <li class="cityTemperature"></li>
-                    <li class="temperatureCompare"></li>
-                </ul>
-            </div> -->
             <!-- City Temperatrueasdad -->
             <div class="resultsContainer">
                 <section> 
-                    <h3>City</h3>
-                    <img src="https://placebear.com/300/450" alt="">
-                    <ul>
-                        <li class="cityAverage"></li>
-                        <li class="cityMax"></li>
-                        <li class="cityMin"></li>
-                    </ul>
+                    <h3 class="cityTitle"></h3>
+                    <img src="https://placebear.com/250/200" alt="">
+                    <div class="resultsList">
+                        <ul>
+                            <li>Average:</li>
+                            <li>Min:</li>
+                            <li>Max:</li>
+                        </ul>
+                        <ul>
+                            <li class="cityAverage"></li>
+                            <li class="cityMin"></li>
+                            <li class="cityMax"></li>
+                        </ul>
+                    </div>
                 </section>
-                <section>
-                    <h3>Difference</h3>
-                    <ul>
-                        <li class="averageTempDifference"></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </section>
+
                 <!-- Mars temperature -->
                 <section>
                     <h3>Mars</h3>
-                    <img src="https://placebear.com/300/450" alt="">
-                    <ul>
-                        <li class="marsAverage"></li>
-                        <li class="marsMax"></li>
-                        <li class="marsMin"></li>
-                    </ul>
+                    <img src="https://placebear.com/250/200" alt="">
+                    <div class="resultsList">
+                        <ul>
+                            <li>Average:</li>
+                            <li>Min:</li>
+                            <li>Max:</li>
+                        </ul>
+                        <ul>
+                            <li class="marsAverage"></li>
+                            <li class="marsMin"></li>
+                            <li class="marsMax"></li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h3>Difference</h3>
+                    <div class="resultsList">
+                        <ul>
+                            <li>Avg:</li>
+                            <li>Min:</li>
+                            <li>Max:</li>
+                        </ul>
+                        <ul>
+                            <li class="averageTempDifference"></li>
+                            <li class=""></li>
+                            <li class=""></li>
+                        </ul>
+                    </div>
                 </section>
             </div>
         </div>

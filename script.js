@@ -28,9 +28,9 @@ weatherCompare.addMarsData = function(marsResult) {
   const marsMaxTemperature = marsResult[0]["343"].AT.mx.toFixed(2);
   const marsMinTemperature = marsResult[0]["343"].AT.mn.toFixed(2);
 
-  let marsAvgSentence = `It is ${marsAvgTemperature} degrees on Mars`;
-  let marsMaxSentence = `There's a high of ${marsMaxTemperature}`;
-  let marsMinSentence = `There's a low of ${marsMinTemperature}`;
+  let marsAvgSentence = `${marsAvgTemperature}°`;
+  let marsMaxSentence = `${marsMaxTemperature}°`;
+  let marsMinSentence = `${marsMinTemperature}°`;
 
   $("li.marsAverage").html(marsAvgSentence);
   $("li.marsMax").html(marsMaxSentence);
@@ -54,10 +54,11 @@ weatherCompare.addCityData = function(cityResult) {
   let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
   let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
 
-  let cityAvgSentence = `It is ${cityAvgTemperature} degrees in ${cityName}`;
-  let cityMaxSentence = `There's a high of ${cityMaxTemperature}`;
-  let cityMinSentence = `There's a high of ${cityMinTemperature}`;
+    let cityAvgSentence = `${cityAvgTemperature}°`;
+    let cityMaxSentence = `${cityMaxTemperature}°`;
+    let cityMinSentence = `${cityMinTemperature}°`;
 
+  $('h3.cityTitle').html(cityName);
   $("li.cityAverage").html(cityAvgSentence);
   $("li.cityMax").html(cityMaxSentence);
   $("li.cityMin").html(cityMinSentence);
@@ -74,7 +75,7 @@ weatherCompare.addDifferenceData = function(marsResult, cityResult) {
 };
 
 weatherCompare.getUserCity = function() {
-  $(".cityWeather").on("submit", function(event) {
+    $("form.cityWeather").on("submit", function(event) {
     event.preventDefault();
     userCity = $(".cityWeather input").val();
 
@@ -82,16 +83,19 @@ weatherCompare.getUserCity = function() {
       const userCityFunction = weatherCompare.getCityWeather(userCity);
       const marsWeatherFunction = weatherCompare.getMarsWeather();
 
-      // console.log(userCityFunction, marsWeatherFunction);
-
-      $.when(userCityFunction, marsWeatherFunction).done(function(
-        cityData,
-        marsData
-      ) {
+      $.when(userCityFunction, marsWeatherFunction).done(function(cityData, marsData) {
         weatherCompare.addMarsData(marsData);
         weatherCompare.addCityData(cityData);
         weatherCompare.addDifferenceData(marsData, cityData);
-      });
+
+        $('main').removeClass("displayNone");
+      }).then(function(){
+          $("html,body").animate({
+              scrollTop: $("#resultsSection").offset().top
+          },
+              "slow"
+          );
+      })
     } else {
       alert("PLZ ENTER A CITY!!!!");
     }

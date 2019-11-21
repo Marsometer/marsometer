@@ -337,7 +337,13 @@ button.cityWeatherInput {
   color: white;
   background-color: #281C3C;
   border-radius: 10px;
+  z-index: 0;
+}
+
+button.cityWeatherInput a {
+  display: inline-block;
   padding: 25px;
+  z-index: 5;
 }
 
 @font-face {
@@ -354,6 +360,15 @@ main {
   height: 90vh;
 }
 
+img {
+  display: block;
+}
+
+section {
+  border: 2px solid salmon;
+  margin: 25px 0;
+}
+
 .resultsContainer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -368,6 +383,32 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.resultsList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.resultsList ul {
+  width: 50%;
+}
+
+.resultsList ul:nth-child(1) {
+  padding-right: 10px;
+  border-right: 2px solid black;
+  text-align: right;
+}
+
+.resultsList ul:nth-child(2) {
+  width: calc(50% - 2px);
+  padding-left: 10px;
+  text-align: left;
+}
+
+.displayNone {
+  display: none;
 }
 
 .visuallyHidden {

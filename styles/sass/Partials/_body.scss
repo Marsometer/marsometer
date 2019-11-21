@@ -8,10 +8,20 @@
 html {
   font-size: 125%;
   text-align: center;
+//   scroll-behavior: smooth;
 }
 
 main {
   height: 90vh;
+}
+
+img {
+    display: block;
+}
+
+section {
+    border: 2px solid salmon;
+    margin: 25px 0;
 }
 
 .resultsContainer {
@@ -21,9 +31,26 @@ main {
   align-items: center;
 }
 
-// .hidden {
-//     display: none;
-// }
+.resultsList {
+    display: flex;
+    ul {
+        width: 50%;
+        &:nth-child(1){
+            padding-right: 10px;
+            border-right: 2px solid black;
+            text-align: right;
+        }
+        &:nth-child(2){
+            width: calc(50% - 2px);
+            padding-left: 10px;
+            text-align: left;
+        }
+    }
+}
+
+.displayNone {
+    display: none;
+}
 
 .visuallyHidden {
   position: absolute !important;

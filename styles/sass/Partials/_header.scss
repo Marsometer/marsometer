@@ -50,5 +50,10 @@ button.cityWeatherInput {
 //   color: black;
   background-color: $hightlightColor;
   border-radius: 10px;
-  padding: 25px;
+  z-index: 0;
+  a {
+      display: inline-block;
+      padding: 25px;
+      z-index: 5;
+  }
 }
