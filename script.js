@@ -122,7 +122,7 @@ weatherCompare.getUserCity = function() {
           );
       })
     } else {
-      alert("PLZ ENTER A CITY!!!!");
+      alert("PLZ ENTER A CITY!!!!!");
     }
   });
 };
