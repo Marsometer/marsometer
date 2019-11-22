@@ -11,7 +11,7 @@ const weatherCompare = {};
 const marsApi = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`;
 const weatherApi = `8f12648509075ad5f7b59b7ecc23f813`;
 
-weatherCompare.getMarsWeather = function() {
+weatherCompare.getMarsWeather = function () {
   const marsWeatherResults = $.ajax({
     url: `https://api.nasa.gov/insight_weather/?api_key=${marsApi}&feedtype=json&ver=1.0`,
     method: `GET`,
@@ -23,6 +23,7 @@ weatherCompare.getMarsWeather = function() {
   return marsWeatherResults;
 };
 
+<<<<<<< HEAD
 weatherCompare.addMarsData = function(marsResult) {
   const marsDataObject = marsResult[0]
   let marsDateArray = [];
@@ -39,6 +40,15 @@ weatherCompare.addMarsData = function(marsResult) {
   const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
   const marsMaxTemperature = marsResult[0][marsCurrentDay].AT.mx.toFixed(2);
   const marsMinTemperature = marsResult[0][marsCurrentDay].AT.mn.toFixed(2);
+=======
+
+weatherCompare.addMarsData = function (marsResult) {
+  const marsAvgTemperature = marsResult[0]["343"].AT.av.toFixed(2);
+  const marsMaxTemperature = marsResult[0]["343"].AT.mx.toFixed(2);
+  const marsMinTemperature = marsResult[0]["343"].AT.mn.toFixed(2);
+>>>>>>> b067018d06c082e65598bf2c1ce3ef5bd79e6fb3
+
+
 
   let marsAvgSentence = `${marsAvgTemperature}°`;
   let marsMaxSentence = `${marsMaxTemperature}°`;
@@ -49,7 +59,7 @@ weatherCompare.addMarsData = function(marsResult) {
   $("li.marsMin").html(marsMinSentence);
 };
 
-weatherCompare.getCityWeather = function(userCity) {
+weatherCompare.getCityWeather = function (userCity) {
   weatherCompare.getMarsWeather();
   const cityWeatherResults = $.ajax({
     url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApi}`,
@@ -59,16 +69,16 @@ weatherCompare.getCityWeather = function(userCity) {
   return cityWeatherResults;
 };
 
-weatherCompare.addCityData = function(cityResult) {
+weatherCompare.addCityData = function (cityResult) {
   let cityName = cityResult[0].name;
 
   let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
   let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
   let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
 
-    let cityAvgSentence = `${cityAvgTemperature}°`;
-    let cityMaxSentence = `${cityMaxTemperature}°`;
-    let cityMinSentence = `${cityMinTemperature}°`;
+  let cityAvgSentence = `${cityAvgTemperature}°`;
+  let cityMaxSentence = `${cityMaxTemperature}°`;
+  let cityMinSentence = `${cityMinTemperature}°`;
 
   $('h3.cityTitle').html(cityName);
   $("li.cityAverage").html(cityAvgSentence);
@@ -76,6 +86,7 @@ weatherCompare.addCityData = function(cityResult) {
   $("li.cityMin").html(cityMinSentence);
 };
 
+<<<<<<< HEAD
 weatherCompare.addDifferenceData = function(marsResult, cityResult) {
   const marsDataObject = marsResult[0]
   let marsDateArray = [];
@@ -91,6 +102,9 @@ weatherCompare.addDifferenceData = function(marsResult, cityResult) {
 
   const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
 
+=======
+weatherCompare.addDifferenceData = function (marsResult, cityResult) {
+>>>>>>> b067018d06c082e65598bf2c1ce3ef5bd79e6fb3
   const cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
 
   const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
@@ -99,27 +113,34 @@ weatherCompare.addDifferenceData = function(marsResult, cityResult) {
   $(`li.averageTempDifference`).html(-Math.abs(averageTempDifference));
 };
 
+<<<<<<< HEAD
 weatherCompare.getUserCity = function() {
     $("form.cityWeather").on("submit", function(event) {
       event.preventDefault();
       userCity = $(".cityWeather input").val();
+=======
+weatherCompare.getUserCity = function () {
+  $("form.cityWeather").on("submit", function (event) {
+    event.preventDefault();
+    userCity = $(".cityWeather input").val();
+>>>>>>> b067018d06c082e65598bf2c1ce3ef5bd79e6fb3
 
     if (userCity !== "") {
       const userCityFunction = weatherCompare.getCityWeather(userCity);
       const marsWeatherFunction = weatherCompare.getMarsWeather();
 
-      $.when(userCityFunction, marsWeatherFunction).done(function(cityData, marsData) {
+      $.when(userCityFunction, marsWeatherFunction).done(function (cityData, marsData) {
         weatherCompare.addMarsData(marsData);
         weatherCompare.addCityData(cityData);
         weatherCompare.addDifferenceData(marsData, cityData);
 
         $('main').removeClass("displayNone");
-      }).then(function(){
-          $("html,body").animate({
-              scrollTop: $("#resultsSection").offset().top
+      }).then(function () {
+        $("html,body").animate({
+            scrollTop: $("#resultsSection").offset().top
           },
-              "slow"
-          );
+          "slow"
+        );
       })
     } else {
       alert("PLZ ENTER A CITY!!!!");
@@ -128,10 +149,10 @@ weatherCompare.getUserCity = function() {
 };
 
 // Start app
-weatherCompare.init = function() {
+weatherCompare.init = function () {
   weatherCompare.getUserCity();
 };
 
-$(function() {
+$(function () {
   weatherCompare.init();
 });
