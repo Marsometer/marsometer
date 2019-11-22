@@ -23,11 +23,22 @@ weatherCompare.getMarsWeather = function () {
   return marsWeatherResults;
 };
 
-
 weatherCompare.addMarsData = function (marsResult) {
-  const marsAvgTemperature = marsResult[0]["343"].AT.av.toFixed(2);
-  const marsMaxTemperature = marsResult[0]["343"].AT.mx.toFixed(2);
-  const marsMinTemperature = marsResult[0]["343"].AT.mn.toFixed(2);
+  const marsDataObject = marsResult[0]
+  let marsDateArray = [];
+
+  for (key in marsDataObject) {
+    keyNumber = parseInt(key);
+    if (keyNumber > 0) {
+      marsDateArray.push(keyNumber);
+    }
+  };
+
+  let marsCurrentDay = Math.max(...marsDateArray);
+
+  const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
+  const marsMaxTemperature = marsResult[0][marsCurrentDay].AT.mx.toFixed(2);
+  const marsMinTemperature = marsResult[0][marsCurrentDay].AT.mn.toFixed(2);
 
 
 
@@ -67,49 +78,69 @@ weatherCompare.addCityData = function (cityResult) {
   $("li.cityMin").html(cityMinSentence);
 };
 
+<<
+<< << < HEAD
 weatherCompare.addDifferenceData = function (marsResult, cityResult) {
-  const cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
-  const marsAvgTemperature = marsResult[0]["343"].AT.av.toFixed(2);
+    ===
+    === =
+    weatherCompare.addDifferenceData = function (marsResult, cityResult) {
+      const marsDataObject = marsResult[0]
+      let marsDateArray = [];
 
-  const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
-  console.log(averageTempDifference);
+      for (key in marsDataObject) {
+        keyNumber = parseInt(key);
+        if (keyNumber > 0) {
+          marsDateArray.push(keyNumber);
+        }
+      };
 
-  $(`li.averageTempDifference`).html(-Math.abs(averageTempDifference));
-};
+      let marsCurrentDay = Math.max(...marsDateArray);
 
-weatherCompare.getUserCity = function () {
-  $("form.cityWeather").on("submit", function (event) {
-    event.preventDefault();
-    userCity = $(".cityWeather input").val();
+      const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
 
-    if (userCity !== "") {
-      const userCityFunction = weatherCompare.getCityWeather(userCity);
-      const marsWeatherFunction = weatherCompare.getMarsWeather();
+      >>>
+      >>> > 890 a8f5f68a32219eab62723eaf180d1f4ab8a75
+      const cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
 
-      $.when(userCityFunction, marsWeatherFunction).done(function (cityData, marsData) {
-        weatherCompare.addMarsData(marsData);
-        weatherCompare.addCityData(cityData);
-        weatherCompare.addDifferenceData(marsData, cityData);
+      const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
+      console.log(averageTempDifference);
 
-        $('main').removeClass("displayNone");
-      }).then(function () {
-        $("html,body").animate({
-            scrollTop: $("#resultsSection").offset().top
-          },
-          "slow"
-        );
-      })
-    } else {
-      alert("PLZ ENTER A CITY!!!!");
-    }
-  });
-};
+      $(`li.averageTempDifference`).html(-Math.abs(averageTempDifference));
+    };
 
-// Start app
-weatherCompare.init = function () {
-  weatherCompare.getUserCity();
-};
+    weatherCompare.getUserCity = function () {
+      $("form.cityWeather").on("submit", function (event) {
+        event.preventDefault();
+        userCity = $(".cityWeather input").val();
 
-$(function () {
-  weatherCompare.init();
-});
+        if (userCity !== "") {
+          const userCityFunction = weatherCompare.getCityWeather(userCity);
+          const marsWeatherFunction = weatherCompare.getMarsWeather();
+
+          $.when(userCityFunction, marsWeatherFunction).done(function (cityData, marsData) {
+            weatherCompare.addMarsData(marsData);
+            weatherCompare.addCityData(cityData);
+            weatherCompare.addDifferenceData(marsData, cityData);
+
+            $('main').removeClass("displayNone");
+          }).then(function () {
+            $("html,body").animate({
+                scrollTop: $("#resultsSection").offset().top
+              },
+              "slow"
+            );
+          })
+        } else {
+          alert("PLZ ENTER A CITY!!!!!");
+        }
+      });
+    };
+
+    // Start app
+    weatherCompare.init = function () {
+      weatherCompare.getUserCity();
+    };
+
+    $(function () {
+      weatherCompare.init();
+    });
