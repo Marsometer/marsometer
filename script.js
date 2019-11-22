@@ -24,9 +24,21 @@ weatherCompare.getMarsWeather = function() {
 };
 
 weatherCompare.addMarsData = function(marsResult) {
-  const marsAvgTemperature = marsResult[0]["343"].AT.av.toFixed(2);
-  const marsMaxTemperature = marsResult[0]["343"].AT.mx.toFixed(2);
-  const marsMinTemperature = marsResult[0]["343"].AT.mn.toFixed(2);
+  const marsDataObject = marsResult[0]
+  let marsDateArray = [];
+
+  for (key in marsDataObject){
+    keyNumber = parseInt(key);
+    if (keyNumber > 0){
+      marsDateArray.push(keyNumber);
+    }
+  };
+
+  let marsCurrentDay = Math.max(...marsDateArray);
+
+  const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
+  const marsMaxTemperature = marsResult[0][marsCurrentDay].AT.mx.toFixed(2);
+  const marsMinTemperature = marsResult[0][marsCurrentDay].AT.mn.toFixed(2);
 
   let marsAvgSentence = `${marsAvgTemperature}°`;
   let marsMaxSentence = `${marsMaxTemperature}°`;
@@ -65,8 +77,21 @@ weatherCompare.addCityData = function(cityResult) {
 };
 
 weatherCompare.addDifferenceData = function(marsResult, cityResult) {
+  const marsDataObject = marsResult[0]
+  let marsDateArray = [];
+
+  for (key in marsDataObject) {
+    keyNumber = parseInt(key);
+    if (keyNumber > 0) {
+      marsDateArray.push(keyNumber);
+    }
+  };
+
+  let marsCurrentDay = Math.max(...marsDateArray);
+
+  const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
+
   const cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
-  const marsAvgTemperature = marsResult[0]["343"].AT.av.toFixed(2);
 
   const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
   console.log(averageTempDifference);
@@ -76,8 +101,8 @@ weatherCompare.addDifferenceData = function(marsResult, cityResult) {
 
 weatherCompare.getUserCity = function() {
     $("form.cityWeather").on("submit", function(event) {
-    event.preventDefault();
-    userCity = $(".cityWeather input").val();
+      event.preventDefault();
+      userCity = $(".cityWeather input").val();
 
     if (userCity !== "") {
       const userCityFunction = weatherCompare.getCityWeather(userCity);
