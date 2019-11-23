@@ -364,6 +364,15 @@ img {
   display: block;
 }
 
+img.cityImage {
+  height: 200px;
+}
+
+.resultsContainer img {
+  height: 200px;
+  width: 250px;
+}
+
 section {
   margin: 20px 0;
 }
