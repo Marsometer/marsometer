@@ -33,7 +33,7 @@ weatherCompare.getCityWeather = function (userCity) {
   return cityWeatherResults;
 };
 
-weatherCompare.getCityPhoto = function(userCity){
+weatherCompare.getCityPhoto = function (userCity) {
   const cityPhoto = $.ajax({
     url: `https://api.teleport.org/api/urban_areas/slug:${userCity}/images/`,
     method: `GET`,
@@ -42,13 +42,13 @@ weatherCompare.getCityPhoto = function(userCity){
   return cityPhoto;
 }
 
-weatherCompare.addCityPhoto = function(cityPhotoResult){
+weatherCompare.addCityPhoto = function (cityPhotoResult) {
   const cityPhotoToAppend = cityPhotoResult.photos[0].image.mobile;
 
   $(".cityPhoto").html(`<img class="cityImage" src="${cityPhotoToAppend}" alt="">`)
 }
 
-weatherCompare.addCityPhotoCatch = function(){
+weatherCompare.addCityPhotoCatch = function () {
   $(".cityPhoto").html(`<img class="cityImage" src="./assets/genericCity.jpg" alt="">`)
 }
 
@@ -69,9 +69,9 @@ weatherCompare.addMarsData = function (marsResult) {
   const marsMaxTemperature = marsResult[0][marsCurrentDay].AT.mx.toFixed(2);
   const marsMinTemperature = marsResult[0][marsCurrentDay].AT.mn.toFixed(2);
 
-  $("li.marsAverage").html(`${marsAvgTemperature}°`);
-  $("li.marsMax").html(`${marsMaxTemperature}°`);
-  $("li.marsMin").html(`${marsMinTemperature}°`);
+  $("li.marsAverage").html(`${marsAvgTemperature}°C`);
+  $("li.marsMax").html(`${marsMaxTemperature}°C`);
+  $("li.marsMin").html(`${marsMinTemperature}°C`);
 };
 
 weatherCompare.addCityData = function (cityResult, userCity) {
@@ -82,14 +82,14 @@ weatherCompare.addCityData = function (cityResult, userCity) {
   let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
 
   $('h3.cityTitle').html(cityName);
-  $("li.cityAverage").html(`${cityAvgTemperature}°`);
-  $("li.cityMax").html(`${cityMaxTemperature}°`);
-  $("li.cityMin").html(`${cityMinTemperature}°`);
+  $("li.cityAverage").html(`${cityAvgTemperature}°C`);
+  $("li.cityMax").html(`${cityMaxTemperature}°C`);
+  $("li.cityMin").html(`${cityMinTemperature}°C`);
 
   const userCityPhoto = weatherCompare.getCityPhoto(userCity);
   $.when(userCityPhoto)
     .done(function (cityPhotoResult) {
-    weatherCompare.addCityPhoto(cityPhotoResult);
+      weatherCompare.addCityPhoto(cityPhotoResult);
     })
     .fail(weatherCompare.addCityPhotoCatch());
 };
@@ -113,7 +113,9 @@ weatherCompare.addDifferenceData = function (marsResult, cityResult) {
 
   const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
 
+
   $(`li.averageTempDifference`).html(-Math.abs(averageTempDifference));
+
 };
 
 weatherCompare.getUserCity = function () {
