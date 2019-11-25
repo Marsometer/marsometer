@@ -116,6 +116,7 @@ weatherCompare.getUserInput = function () {
       const userCityWeather = weatherCompare.getCityWeather(userCity);
       const marsWeatherFunction = weatherCompare.getMarsWeather();
 
+      // Part of preloader. Plz fix!
       $(".majorTom").addClass("displayNone");
       $("div.atomPreloader").removeClass("displayNone");
       // 
@@ -127,18 +128,21 @@ weatherCompare.getUserInput = function () {
 
         $("#resultsSection").removeClass("displayNone");
       }).then(function () {
+        // Part of preloader. Plz fix!
         setTimeout(function () { 
           $(".majorTom").removeClass("displayNone");
           $("div.atomPreloader").addClass("displayNone");
-
+        // 
           $("html,body").animate({
             scrollTop: $("#resultsSection").offset().top
           },
             300,
             "linear"
           );
+        // 
         }, 
           500);
+        // 
       });
     } else {
       alert("PLZ ENTER A CITY!!!!!");
