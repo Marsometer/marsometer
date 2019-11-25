@@ -116,20 +116,10 @@ weatherCompare.getUserInput = function () {
       const userCityWeather = weatherCompare.getCityWeather(userCity);
       const marsWeatherFunction = weatherCompare.getMarsWeather();
 
-      // Preloader (plz fix)
-      setTimeout(function() { 
-        $("div.atomPreloader").toggleClass("displayNone");
-        $(".majorTom").toggleClass("displayNone");
-      }, 2000);
+      $(".majorTom").addClass("displayNone");
+      $("div.atomPreloader").removeClass("displayNone");
       // 
-
       $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
-        // Preloader (plz fix)
-        setTimeout(function () {
-          $("div.atomPreloader").toggleClass("displayNone");
-          $(".majorTom").toggleClass("displayNone");
-        }, 2000);
-        //
 
         weatherCompare.addMarsData(marsData);
         weatherCompare.addCityData(cityData, userCity);
@@ -137,14 +127,19 @@ weatherCompare.getUserInput = function () {
 
         $("#resultsSection").removeClass("displayNone");
       }).then(function () {
+        setTimeout(function () { 
+          $(".majorTom").removeClass("displayNone");
+          $("div.atomPreloader").addClass("displayNone");
 
-        $("html,body").animate({
-          scrollTop: $("#resultsSection").offset().top
-        },
-          300,
-          "linear"
-        );
-      })
+          $("html,body").animate({
+            scrollTop: $("#resultsSection").offset().top
+          },
+            300,
+            "linear"
+          );
+        }, 
+          500);
+      });
     } else {
       alert("PLZ ENTER A CITY!!!!!");
     }
