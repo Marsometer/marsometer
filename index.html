@@ -21,80 +21,82 @@
         <div class="headerContent wrapper">
             <h1>Major Temp</h1>
             <!-- <p>Ground Control to Major Temp</p> -->
-            <img src="https://media.giphy.com/media/h8mB9WD5K406EM1wn2/giphy.gif" alt="">
+            <img class="majorTom" src="https://media.giphy.com/media/h8mB9WD5K406EM1wn2/giphy.gif" alt="">
+
+            <div class="atomPreloader displayNone">
+                <img src="./assets/atomPreloader.gif" alt="">
+                <p>Loading</p>
+            </div>
+
             <form action="" class="cityWeather">
                 <label for="cityWeatherInput" name="cityWeather" class="visuallyHidden">Enter A City</label>
                 <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city"
-                    autocomplete="off">
-                <button type="submit" name="cityWeather" class="cityWeatherInput">Commencing Countdown Engines
-                    On..</button>
-
+                autocomplete="off">
+                <button type="submit" name="cityWeather" class="cityWeatherInput">Commencing Countdown Engines On..</button>
             </form>
-            <!-- <a href="#resultsSection">asdjkljasd</a> -->
         </div>
     </header>
-    <!-- Display none -->
-    <main id="resultsSection" class="displayNone">
-        <div class="wrapper">
-            <h2>Results</h2>
-            <!-- City Temperatrueasdad -->
-            <div class="resultsContainer">
-                <section>
-                    <h3 class="cityTitle"></h3>
-                    <div class="cityPhoto"></div>
-                    <div class="resultsList">
-                        <ul>
-                            <li>Average:</li>
-                            <li>Min:</li>
-                            <li>Max:</li>
-                        </ul>
-                        <ul>
-                            <li class="cityAverage"></li>
-                            <li class="cityMin"></li>
-                            <li class="cityMax"></li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Mars temperature -->
-                <section>
-                    <h3>Mars</h3>
-                    <p>Elysium Planitia</p>
-                    <img src="./assets/MarsInsight.jpg" alt="An artist’s impression of the InSight lander on Mars">
-                    <div class="resultsList">
-                        <ul>
-                            <li>Average:</li>
-                            <li>Min:</li>
-                            <li>Max:</li>
-                        </ul>
-                        <ul>
-                            <li class="marsAverage"></li>
-                            <li class="marsMin"></li>
-                            <li class="marsMax"></li>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h3>Difference</h3>
-                    <div class="resultsList">
-                        <ul>
-                            <li>Avg:</li>
-                            <li>Min:</li>
-                            <li>Max:</li>
-                        </ul>
-                        <ul>
-                            <li class="averageTempDifference"></li>
-                            <li class="minTempDifference"></li>
-                            <li class="maxTempDifference"></li>
-                        </ul>
-                    </div>
-                </section>
+    <div id="resultsSection" class="resultsSection displayNone">
+        <main>
+            <div class="wrapper">
+                <h2>Results</h2>
+                <div class="resultsContainer">
+                    <section class="cityResults">
+                        <h3>Earth</h3>
+                        <p class="cityTitle"></p>
+                        <div class="cityPhoto"></div>
+                        <div class="resultsList">
+                            <ul>
+                                <li>Average:</li>
+                                <li>Min:</li>
+                                <li>Max:</li>
+                            </ul>
+                            <ul>
+                                <li class="cityAverage"></li>
+                                <li class="cityMin"></li>
+                                <li class="cityMax"></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="marsResults">
+                        <h3>Mars</h3>
+                        <p>Elysium Planitia</p>
+                        <img src="./assets/MarsInsight.jpg" alt="An artist’s impression of the InSight lander on Mars">
+                        <div class="resultsList">
+                            <ul>
+                                <li>Average:</li>
+                                <li>Min:</li>
+                                <li>Max:</li>
+                            </ul>
+                            <ul>
+                                <li class="marsAverage"></li>
+                                <li class="marsMin"></li>
+                                <li class="marsMax"></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="difference">
+                        <h3>Difference</h3>
+                        <div class="resultsList">
+                            <ul>
+                                <li>Avg:</li>
+                                <li>Min:</li>
+                                <li>Max:</li>
+                            </ul>
+                            <ul>
+                                <li class="averageTempDifference"></li>
+                                <li class="minTempDifference"></li>
+                                <li class="maxTempDifference"></li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
             </div>
+        </main>
+        <footer>
+            <p>Copyright © 2019 Marsometer</p>
+        </footer>
         </div>
-    </main>
-    <!-- <footer>
-        <p>Copyright 2019 Marsometer Inc.</p>
-    </footer> -->
 </body>
 
 </html>

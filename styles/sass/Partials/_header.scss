@@ -6,7 +6,7 @@ header {
   background-image: url(../assets/background.jpg);
   background-size: cover;
   background-attachment: fixed;
-}
+};
 
 .headerContent {
   height: 100%;
@@ -15,22 +15,29 @@ header {
   justify-content: space-around;
   align-items: center;
 
+  h1 {
+    font-family: $titleFont, serif;
+    font-size: 2rem;
+    color: $textColor;
+    text-shadow: 2px 2px $hightlightColor;  
+  };
+
+  p {
+    color: $textColor;
+    background: rgba($color: #000, $alpha: 0.5);
+    padding: 5px;
+    border-radius: 5px;
+  }
+
   img {
     width: 80%;
     height: auto;
     max-width: 400px;
-  }
-}
-
-h1 {
-  font-family: $titleFont, serif;
-  font-size: 2rem;
-  color: white;
-  text-shadow: 2px 2px $hightlightColor;
-}
+    min-width: 200px;
+  };
+};
 
 form {
-  //   border: 2px solid white;
   display: flex;
   flex-direction: column;
   @include centerFlexChildren;
@@ -40,33 +47,28 @@ form {
     font-weight: bold;
     font-size: 1.3rem;
     text-align: center;
-    color: white;
-    background: rgba($color: #fff, $alpha: 0.1);
+    color: $textColor;
+    background: rgba($color: #000, $alpha: 0.5);
     border: none;
-    border-bottom: 2px solid yellow;
+    border-radius: 10px;
+    border-bottom: 2px solid lighten($color: $hightlightColor, $amount: 50);
     margin: 0 0 50px 0;
+    padding: 5px 0;
     width: 70%;
-  }
-}
+    &::placeholder {
+      color: $textColor;
+      opacity: 1;
+    };
+  };
 
-button.cityWeatherInput {
-  font-family: $titleFont;
-  color: white;
-  //   color: black;
-  background-color: $hightlightColor;
-  border-radius: 10px;
-  z-index: 0;
-  padding: 10px;
-
-
-
-  a {
-    display: inline-block;
-    padding: 25px;
-    z-index: 5;
-  }
-
-  :hover {
-    background: red;
-  }
-}
+  button {
+    font-family: $titleFont;
+    color: $textColor;
+    background-color: $hightlightColor;
+    border-radius: 10px;
+    padding: 10px;
+    &:hover {
+      background: lighten($color: $hightlightColor, $amount: 50);
+    };
+  };
+};

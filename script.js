@@ -1,32 +1,22 @@
-// API app idea --- an app that lets the user compare the weather in the city of their choosing with the weather on Mars.
-
-// User will be greeted by a space-themed landing page with an input form. The instructions will tell the user to enter the name of their/any city and submit. On submit, two panels will slide into view with information on their selected city's weather and Mars' weather, respectively. Each panel will detail specifics about temperature, forecast, meteorological events etc. There will also be information on the page that directly compares the two e.g. Mars is ___ degrees colder than Toronto.
-
-// This will use a weather API and a NASA api.
-// TESTINg
-// Potential pseudo code
-
 const weatherCompare = {};
 
-const marsApi = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`;
-const weatherApi = `8f12648509075ad5f7b59b7ecc23f813`;
+const marsApiKey = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`;
+const weatherApiKey = `8f12648509075ad5f7b59b7ecc23f813`;
+
+const $cityPhoto = $(".cityPhoto");
 
 weatherCompare.getMarsWeather = function () {
   const marsWeatherResults = $.ajax({
-    url: `https://api.nasa.gov/insight_weather/?api_key=${marsApi}&feedtype=json&ver=1.0`,
+    url: `https://api.nasa.gov/insight_weather/?api_key=${marsApiKey}&feedtype=json&ver=1.0`,
     method: `GET`,
-    dataType: `json`
-    // version: 1,
-    // feedtype: `JSON`,
-    // api_key: `${marsApi}`
+    dataType: `json`,
   });
   return marsWeatherResults;
 };
 
 weatherCompare.getCityWeather = function (userCity) {
-  // weatherCompare.getCityPhoto(userCity);
   const cityWeatherResults = $.ajax({
-    url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApi}`,
+    url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApiKey}`,
     method: `GET`,
     dataType: `json`
   });
@@ -34,12 +24,12 @@ weatherCompare.getCityWeather = function (userCity) {
 };
 
 weatherCompare.getCityPhoto = function (userCity) {
-  const cityPhoto = $.ajax({
-    url: `https://api.teleport.org/api/urban_areas/slug:${userCity}/images/`,
+  const cityPhotoResult = $.ajax({
+    url: `https://api.teleport.org/api/urban_areas/slug:${userCity.toLowerCase()}/images/`,
     method: `GET`,
     dataType: `json`,
   });
-  return cityPhoto;
+  return cityPhotoResult;
 }
 
 weatherCompare.addCityPhoto = function (cityPhotoResult) {
@@ -60,38 +50,38 @@ weatherCompare.addMarsData = function (marsResult) {
     keyNumber = parseInt(key);
     if (keyNumber > 0) {
       marsDateArray.push(keyNumber);
-    }
+    };
   };
 
   let marsCurrentDay = Math.max(...marsDateArray);
+  
+  const marsAvgTemperature = ((marsResult[0][marsCurrentDay].AT.av - 32) * 5 / 9).toFixed(2);
+  const marsMaxTemperature = ((marsResult[0][marsCurrentDay].AT.mx - 32) * 5 / 9).toFixed(2);
+  const marsMinTemperature = ((marsResult[0][marsCurrentDay].AT.mn - 32) * 5 / 9).toFixed(2);
 
-  const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
-  const marsMaxTemperature = marsResult[0][marsCurrentDay].AT.mx.toFixed(2);
-  const marsMinTemperature = marsResult[0][marsCurrentDay].AT.mn.toFixed(2);
-
-  $("li.marsAverage").html(`${marsAvgTemperature}°C`);
-  $("li.marsMax").html(`${marsMaxTemperature}°C`);
-  $("li.marsMin").html(`${marsMinTemperature}°C`);
+  $("li.marsAverage").html(`${marsAvgTemperature}°`);
+  $("li.marsMax").html(`${marsMaxTemperature}°`);
+  $("li.marsMin").html(`${marsMinTemperature}°`);
 };
 
 weatherCompare.addCityData = function (cityResult, userCity) {
-  let cityName = cityResult[0].name;
-
-  let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
-  let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
-  let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
-
-  $('h3.cityTitle').html(cityName);
-  $("li.cityAverage").html(`${cityAvgTemperature}°C`);
-  $("li.cityMax").html(`${cityMaxTemperature}°C`);
-  $("li.cityMin").html(`${cityMinTemperature}°C`);
-
   const userCityPhoto = weatherCompare.getCityPhoto(userCity);
   $.when(userCityPhoto)
     .done(function (cityPhotoResult) {
       weatherCompare.addCityPhoto(cityPhotoResult);
     })
     .fail(weatherCompare.addCityPhotoCatch());
+
+  let cityName = cityResult[0].name;
+
+  let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
+  let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
+  let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
+
+  $("p.cityTitle").html(cityName);
+  $("li.cityAverage").html(`${cityAvgTemperature}°`);
+  $("li.cityMax").html(`${cityMaxTemperature}°`);
+  $("li.cityMin").html(`${cityMinTemperature}°`);
 };
 
 weatherCompare.addDifferenceData = function (marsResult, cityResult) {
@@ -107,39 +97,52 @@ weatherCompare.addDifferenceData = function (marsResult, cityResult) {
 
   let marsCurrentDay = Math.max(...marsDateArray);
 
-  const marsAvgTemperature = marsResult[0][marsCurrentDay].AT.av.toFixed(2);
+  const marsAvgTemperature = ((marsResult[0][marsCurrentDay].AT.av - 32) * 5 / 9).toFixed(2);
 
   const cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
 
-  const averageTempDifference = cityAvgTemperature - marsAvgTemperature;
+  const averageTempDifference = (cityAvgTemperature - marsAvgTemperature).toFixed(2);
 
-
-  $(`li.averageTempDifference`).html(-Math.abs(averageTempDifference));
-
+  $("li.averageTempDifference").html(-Math.abs(averageTempDifference));
 };
 
-weatherCompare.getUserCity = function () {
+weatherCompare.getUserInput = function () {
   $("form.cityWeather").on("submit", function (event) {
     event.preventDefault();
     userCity = $(".cityWeather input").val();
+    $("input").val('');
 
     if (userCity !== "") {
-
       const userCityWeather = weatherCompare.getCityWeather(userCity);
       const marsWeatherFunction = weatherCompare.getMarsWeather();
 
+      // Preloader (plz fix)
+      setTimeout(function() { 
+        $("div.atomPreloader").toggleClass("displayNone");
+        $(".majorTom").toggleClass("displayNone");
+      }, 2000);
+      // 
+
       $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
+        // Preloader (plz fix)
+        setTimeout(function () {
+          $("div.atomPreloader").toggleClass("displayNone");
+          $(".majorTom").toggleClass("displayNone");
+        }, 2000);
+        //
 
         weatherCompare.addMarsData(marsData);
         weatherCompare.addCityData(cityData, userCity);
         weatherCompare.addDifferenceData(marsData, cityData);
 
-        $('main').removeClass("displayNone");
+        $("#resultsSection").removeClass("displayNone");
       }).then(function () {
+
         $("html,body").animate({
-            scrollTop: $("#resultsSection").offset().top
-          },
-          "slow"
+          scrollTop: $("#resultsSection").offset().top
+        },
+          300,
+          "linear"
         );
       })
     } else {
@@ -149,8 +152,8 @@ weatherCompare.getUserCity = function () {
 };
 
 // Start app
-weatherCompare.init = function () {
-  weatherCompare.getUserCity();
+weatherCompare.init = function() {
+  weatherCompare.getUserInput();
 };
 
 $(function () {

@@ -1,10 +1,6 @@
-// Imports
-
 @import "./Partials/setup";
-@import "./Partials/nav";
-@import "./Partials/variables";
-@import "./Partials/footer"; 
+@import "./Partials/globalStyles.scss";
+@import "./Partials/preloader";
 @import "./Partials/header"; 
-@import "./Partials/body"; 
-@import "./Partials/mixins";
+@import "./Partials/mainStyle"; 
 

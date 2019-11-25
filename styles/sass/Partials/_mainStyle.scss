@@ -1,0 +1,67 @@
+@import "variables";
+@import "mixins";
+
+.resultsSection { 
+  background: black;
+  color: $textColor;
+
+  h2 {
+    font-size: 50px;
+    padding: 10px 0;
+  }
+
+  main {
+    height: 92.5%;
+    
+    section {
+      margin: 20px 0;
+    };
+  };
+
+  footer {
+    height: 7.5%;
+    padding: 5px;
+  };
+
+  @include width-800px {
+    height: 100vh;
+  };
+};
+
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    height: 200px;
+    width: 250px;
+  };
+
+  @include width-800px {
+    flex-direction: row;
+    .marsResults {
+      order: 3;
+    };
+    .difference {
+      order: 2;
+    };
+  };
+};
+
+.resultsList {
+  display: flex;
+  ul {
+    width: 50%;
+    &:nth-child(1) {
+      padding-right: 10px;
+      border-right: 2px solid white;
+      text-align: right;
+    };
+    &:nth-child(2) {
+      width: calc(50% - 2px);
+      padding-left: 10px;
+      text-align: left;
+    };
+  };
+};
