@@ -45,7 +45,8 @@ header {
     background: none;
     border: none;
     text-shadow: 2px 2px lighten($color: $hightlightColor, $amount: 50);
-    &:hover {
+    &:hover,
+    &:focus {
       transform: scale(1.1);
       cursor: pointer;
     }
@@ -87,7 +88,8 @@ form {
     background-color: $hightlightColor;
     border-radius: 10px;
     padding: 10px;
-    &:hover {
+    &:hover,
+    &:focus {
       background: lighten($color: $hightlightColor, $amount: 50);
       transform: scale(1.05);
       cursor: pointer;

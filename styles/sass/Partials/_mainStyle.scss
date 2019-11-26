@@ -49,12 +49,15 @@
   };
 
   @include width-666px {
-
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   };
 
-  @include width-850px {
+  @include width-870px {
     padding: 130px 0 0 0;
-    flex-direction: row;
+    flex-wrap: none;
+    justify-content: space-between;
     .marsResults {
       order: 3;
     };
@@ -90,7 +93,8 @@
   background-color: $hightlightColor;
   border-radius: 10px;
   padding: 10px;
-  &:hover {
+  &:hover,
+  &:focus {
     background: lighten($color: $hightlightColor, $amount: 50);
     transform: scale(1.05);
     cursor: pointer;

@@ -260,10 +260,6 @@ html {
   src: url(../assets/outerSpace.ttf);
 }
 
-span {
-  color: white;
-}
-
 html {
   font-size: 125%;
   text-align: center;
@@ -324,10 +320,6 @@ a {
   src: url(../assets/outerSpace.ttf);
 }
 
-span {
-  color: white;
-}
-
 header {
   height: 100vh;
   background-image: url(../assets/background.jpg);
@@ -384,7 +376,7 @@ header {
   text-shadow: 2px 2px #ab35ff;
 }
 
-.headerContent .volumeButton:hover {
+.headerContent .volumeButton:hover, .headerContent .volumeButton:focus {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   cursor: pointer;
@@ -457,7 +449,7 @@ form button {
   padding: 10px;
 }
 
-form button:hover {
+form button:hover, form button:focus {
   background: #ab35ff;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
@@ -467,10 +459,6 @@ form button:hover {
 @font-face {
   font-family: "outerSpace";
   src: url(../assets/outerSpace.ttf);
-}
-
-span {
-  color: white;
 }
 
 .resultsSection {
@@ -533,13 +521,28 @@ span {
   border-radius: 10px;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 666px) {
   .resultsContainer {
-    padding: 130px 0 0 0;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 870px) {
+  .resultsContainer {
+    padding: 130px 0 0 0;
+    -ms-flex-wrap: none;
+        flex-wrap: none;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   .resultsContainer .marsResults {
     -webkit-box-ordinal-group: 4;
@@ -586,7 +589,7 @@ span {
   padding: 10px;
 }
 
-.toggleTempScale:hover {
+.toggleTempScale:hover, .toggleTempScale:focus {
   background: #ab35ff;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
