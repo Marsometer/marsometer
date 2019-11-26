@@ -41,6 +41,7 @@ app.getCityWeather = function (userCity) {
 
 app.getCityPhoto = function (userCity) {
   const formattedCity = userCity.replace(` `, `-`);
+
   const cityPhotoResult = $.ajax({
     url: `https://api.teleport.org/api/urban_areas/slug:${formattedCity.toLowerCase()}/images/`,
     method: `GET`,
@@ -51,6 +52,7 @@ app.getCityPhoto = function (userCity) {
 
 app.addCityPhoto = function (cityPhotoResult, userCity) {
   const cityPhotoToAppend = cityPhotoResult.photos[0].image.mobile;
+
   $(`.cityPhoto`).html(`<img class="cityImage" src="${cityPhotoToAppend}" alt="A photo of ${userCity}">`);
 }
 
@@ -91,7 +93,6 @@ app.addCityData = function (cityResult, userCity) {
     .fail(app.addCityPhotoCatch(userCity));
 
   let cityName = cityResult[0].name;
-
   let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
   let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
   let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
@@ -159,15 +160,14 @@ app.getUserInput = function () {
   $(`form.cityWeather`).on(`submit`, function (event) {
     event.preventDefault();
     userCity = $(`.cityWeather input`).val();
-
-    if ($(`.volumeButton`).hasClass(`volumeOff`) === false){
-          audioElement.play();
-    };
-
     $(`input`).val(``);
 
     if (userCity !== ``) {
       const userCityWeather = app.getCityWeather(userCity);
+
+      if ($(`.volumeButton`).hasClass(`volumeOff`) === false) {
+        audioElement.play();
+      };
 
       $(`.majorTom`).addClass(`displayNone`);
       $(`div.atomPreloader`).removeClass(`displayNone`);
@@ -178,7 +178,7 @@ app.getUserInput = function () {
         app.addMarsData(cityData, marsData);
 
         $(`#resultsSection`).removeClass(`displayNone`);
-      }).then(function () {
+
         app.typedHeader = new Typed(`#typed-text`, {
           strings: [``, `Greetings Earthling 👽`, `You vs. Martian Weather`
           ],
@@ -190,7 +190,7 @@ app.getUserInput = function () {
           backDelay: 1000,
           startDelay: 0,
         });
-
+      }).then(function () {
         setTimeout(function () { 
           $(`.majorTom`).removeClass(`displayNone`);
           $(`div.atomPreloader`).addClass(`displayNone`);
@@ -198,6 +198,7 @@ app.getUserInput = function () {
             scrollTop: $(`#resultsSection`).offset().top
           }, 300, `linear`);
         }, 500);
+        $(`h2`).removeAttr(`id`);
       })
         .fail(function(){
           $(`.majorTom`).removeClass(`displayNone`);
