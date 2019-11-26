@@ -382,6 +382,10 @@ header {
   cursor: pointer;
 }
 
+.headerContent .volumeButton:focus-within {
+  border: 2px dotted #d446f1;
+}
+
 @media (min-width: 850px) {
   .headerContent .volumeButton {
     position: absolute;
