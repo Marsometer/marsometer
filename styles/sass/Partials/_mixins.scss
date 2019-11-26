@@ -1,10 +1,16 @@
 @mixin centerFlexChildren {
   justify-content: center;
   align-items: center;
-}
+};
 
 @mixin width-666px {
   @media (min-width: 666px) {
+    @content
+  };
+};
+
+@mixin width-834px {
+  @media (min-width: 834px) {
     @content
   };
 };
@@ -19,4 +25,4 @@
   @media (min-width: 870px) {
     @content
   };
-}
+};
