@@ -7,6 +7,7 @@ const audioElement = document.createElement(`audio`);
 audioElement.setAttribute(`src`, `./assets/audioClip/eagleHasLanded.mp3`);
 audioElement.play();
 
+// Volume button toggles between volume-up/volume-mute on click.
 app.volumeButton = function(){
   $(`.volumeButton`).on(`click`, function(){
     $(`.volumeButton`).toggleClass(`volumeOff`);
@@ -14,6 +15,7 @@ app.volumeButton = function(){
   });
 };
 
+// Temperature scale button toggles class on click.
 app.temperatureToggle = function(){
   $(`.toggleTempScale`).on(`click`, function(event){
     event.preventDefault();
@@ -21,6 +23,7 @@ app.temperatureToggle = function(){
   })
 }
 
+// Retrieves temperature/weather from NASA's Insight API. Sometimes takes a minute!
 app.getMarsWeather = function () {
   const marsWeatherResults = $.ajax({
     url: `https://api.nasa.gov/insight_weather/?api_key=${marsApiKey}&feedtype=json&ver=1.0`,
@@ -30,6 +33,7 @@ app.getMarsWeather = function () {
   return marsWeatherResults;
 };
 
+// Retrieves city temperature/weather from openweathermap.org
 app.getCityWeather = function (userCity) {
   const cityWeatherResults = $.ajax({
     url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApiKey}`,
@@ -39,6 +43,7 @@ app.getCityWeather = function (userCity) {
   return cityWeatherResults;
 };
 
+// Retrieves city photo from teleport.org.
 app.getCityPhoto = function (userCity) {
   const formattedCity = userCity.replace(` `, `-`);
 
@@ -50,16 +55,19 @@ app.getCityPhoto = function (userCity) {
   return cityPhotoResult;
 }
 
+// Appends city photo from teleport.org.
 app.addCityPhoto = function (cityPhotoResult, userCity) {
   const cityPhotoToAppend = cityPhotoResult.photos[0].image.mobile;
 
   $(`.cityPhoto`).html(`<img class="cityImage" src="${cityPhotoToAppend}" alt="A photo of ${userCity}">`);
 }
 
+// Appends generic Sims photo (hehe) if app.getCityPhoto does not work.
 app.addCityPhotoCatch = function (userCity) {
   $(`.cityPhoto`).html(`<img class="cityImage" src="./assets/genericCity.jpg" alt="A photo of a generic city, as ${userCity} did not have one available">`);
 }
 
+// Appends Mars' weather data to the page & sends data to app.addDifferenceData to calculate the difference between Mars' temperature and the user city's temperature.
 app.addMarsData = function (cityResult, marsResult) {
   const marsDataObject = marsResult[0]
   let marsDateArray = [];
@@ -84,6 +92,7 @@ app.addMarsData = function (cityResult, marsResult) {
   app.addDifferenceData(marsAvgTemperature, marsMaxTemperature, marsMinTemperature, cityResult);
 };
 
+// Appends user city's temperature to the page.
 app.addCityData = function (cityResult, userCity) {
   const userCityPhoto = app.getCityPhoto(userCity);
   $.when(userCityPhoto)
@@ -103,6 +112,7 @@ app.addCityData = function (cityResult, userCity) {
   $(`li.cityMin`).html(`${cityMinTemperature}°C`);
 };
 
+// Appends difference between Mars' and user city's temperature to the page & sends data to the app.toggleTheTemperature function.
 app.addDifferenceData = function (avgMarsTemp, maxMarsTemp, minMarsTemp, cityResult) {
   let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
   let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
@@ -120,7 +130,7 @@ app.addDifferenceData = function (avgMarsTemp, maxMarsTemp, minMarsTemp, cityRes
   app.toggleTheTemperature(cityAvgTemperature, cityMaxTemperature, cityMinTemperature, avgMarsTemp, maxMarsTemp, minMarsTemp, averageTempDifference, maxTempDifference, minTempDifference);
 };
 
-// 
+// Toggles temperature between C and F.
 app.toggleTheTemperature = function (cityAvgTemperature, cityMaxTemperature, cityMinTemperature, marsAvgTemperature, marsMaxTemperature, marsMinTemperature, averageTempDifference, maxTempDifference, minTempDifference){
 
   $(`.toggleTempScale`).on(`click`, function(){
@@ -154,6 +164,7 @@ app.toggleTheTemperature = function (cityAvgTemperature, cityMaxTemperature, cit
 };
 // 
 
+// Get user input then make AJAX calls.
 app.getUserInput = function () {
   const marsWeatherFunction = app.getMarsWeather();
 
@@ -169,6 +180,7 @@ app.getUserInput = function () {
       $(`div.atomPreloader`).removeClass(`displayNone`);
       // 
       $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
+        // Plays audio
         if ($(`.volumeButton`).hasClass(`volumeOff`) === false) {
           audioElement.play();
         };
@@ -178,8 +190,9 @@ app.getUserInput = function () {
 
         $(`#resultsSection`).removeClass(`displayNone`);
 
+        // typed.js
         app.typedHeader = new Typed(`#typed-text`, {
-          strings: [``, `Greetings Earthling 👽`, `You vs. Martian Weather`
+          strings: [``, `Greetings, Earthling 👽`, `You vs. Martian Weather`
           ],
           typeSpeed: 65,
           backSpeed: 25,
@@ -193,6 +206,8 @@ app.getUserInput = function () {
         setTimeout(function () { 
           $(`.majorTom`).removeClass(`displayNone`);
           $(`div.atomPreloader`).addClass(`displayNone`);
+
+          // Scrolls down
           $(`html,body`).animate({
             scrollTop: $(`#resultsSection`).offset().top
           }, 300, `linear`);
@@ -210,12 +225,14 @@ app.getUserInput = function () {
   });
 };
 
+// App.init
 app.init = function() {
   app.volumeButton();
   app.getUserInput();
   app.temperatureToggle();
 };
 
+// Document Ready
 $(function () {
   app.init();
 });
