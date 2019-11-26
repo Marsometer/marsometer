@@ -165,14 +165,13 @@ app.getUserInput = function () {
     if (userCity !== ``) {
       const userCityWeather = app.getCityWeather(userCity);
 
-      if ($(`.volumeButton`).hasClass(`volumeOff`) === false) {
-        audioElement.play();
-      };
-
       $(`.majorTom`).addClass(`displayNone`);
       $(`div.atomPreloader`).removeClass(`displayNone`);
       // 
       $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
+        if ($(`.volumeButton`).hasClass(`volumeOff`) === false) {
+          audioElement.play();
+        };
 
         app.addCityData(cityData, userCity);
         app.addMarsData(cityData, marsData);
