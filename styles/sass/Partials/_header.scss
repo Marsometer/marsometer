@@ -44,7 +44,7 @@ header {
     color: white;
     background: none;
     border: none;
-    text-shadow: 2px 2px lighten($color: $hightlightColor, $amount: 50);
+    text-shadow: 2px 2px $lighterHighlight;
     &:hover,
     &:focus {
       transform: scale(1.1);
@@ -72,7 +72,7 @@ form {
     background: rgba($color: #000, $alpha: 0.5);
     border: none;
     border-radius: 10px;
-    border-bottom: 2px solid lighten($color: $hightlightColor, $amount: 50);
+    border-bottom: 2px solid $lighterHighlight;
     margin: 0 0 50px 0;
     padding: 5px 0;
     width: 70%;
@@ -90,7 +90,7 @@ form {
     padding: 10px;
     &:hover,
     &:focus {
-      background: lighten($color: $hightlightColor, $amount: 50);
+      background: $lighterHighlight;
       transform: scale(1.05);
       cursor: pointer;
     };

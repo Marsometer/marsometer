@@ -347,7 +347,7 @@ header {
   font-family: "outerSpace", serif;
   font-size: 2rem;
   color: #fff;
-  text-shadow: 2px 2px #1f0035;
+  text-shadow: 2px 2px #2c0434;
 }
 
 .headerContent p {
@@ -373,7 +373,7 @@ header {
   color: white;
   background: none;
   border: none;
-  text-shadow: 2px 2px #ab35ff;
+  text-shadow: 2px 2px #d446f1;
 }
 
 .headerContent .volumeButton:hover, .headerContent .volumeButton:focus {
@@ -415,7 +415,7 @@ form input {
   background: rgba(0, 0, 0, 0.5);
   border: none;
   border-radius: 10px;
-  border-bottom: 2px solid #ab35ff;
+  border-bottom: 2px solid #d446f1;
   margin: 0 0 50px 0;
   padding: 5px 0;
   width: 70%;
@@ -444,13 +444,13 @@ form input::placeholder {
 form button {
   font-family: "outerSpace";
   color: #fff;
-  background-color: #1f0035;
+  background-color: #2c0434;
   border-radius: 10px;
   padding: 10px;
 }
 
 form button:hover, form button:focus {
-  background: #ab35ff;
+  background: #d446f1;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   cursor: pointer;
@@ -584,13 +584,13 @@ form button:hover, form button:focus {
   font-size: 0.8rem;
   font-family: "outerSpace";
   color: #fff;
-  background-color: #1f0035;
+  background-color: #2c0434;
   border-radius: 10px;
   padding: 10px;
 }
 
 .toggleTempScale:hover, .toggleTempScale:focus {
-  background: #ab35ff;
+  background: #d446f1;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   cursor: pointer;
@@ -622,5 +622,5 @@ footer p .copyright {
 footer p a {
   color: #fff;
   text-decoration: none;
-  border-bottom: 1.5px solid #ab35ff;
+  border-bottom: 1.5px solid #d446f1;
 }

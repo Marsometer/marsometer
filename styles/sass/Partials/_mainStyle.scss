@@ -95,7 +95,7 @@
   padding: 10px;
   &:hover,
   &:focus {
-    background: lighten($color: $hightlightColor, $amount: 50);
+    background: $lighterHighlight;
     transform: scale(1.05);
     cursor: pointer;
   };
@@ -116,7 +116,7 @@ footer {
     a {
       color: $textColor;
       text-decoration: none;
-      border-bottom: 1.5px solid lighten($color: $hightlightColor, $amount: 50);
+      border-bottom: 1.5px solid $lighterHighlight;
     }
   };
 };

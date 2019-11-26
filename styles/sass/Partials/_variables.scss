@@ -6,5 +6,6 @@
 $titleFont: "outerSpace";
 $bodyFont: "Space Mono", monospace;
 
-$hightlightColor: rgb(31, 0, 53);
+$hightlightColor: rgb(44, 4, 52);
+$lighterHighlight: lighten($color: $hightlightColor, $amount: 50);
 $textColor: #fff;
