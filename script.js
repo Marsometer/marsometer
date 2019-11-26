@@ -3,7 +3,7 @@ const weatherCompare = {};
 const marsApiKey = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`;
 const weatherApiKey = `8f12648509075ad5f7b59b7ecc23f813`;
 
-const audioElement = document.createElement("audio");
+const audioElement = document.createElement(`audio`);
 audioElement.setAttribute(`src`, `./assets/audioClip/eagleHasLanded.mp3`);
 audioElement.play();
 
@@ -114,7 +114,7 @@ weatherCompare.addDifferenceData = function (avgMarsTemp, maxMarsTemp, minMarsTe
   $(`li.averageTempDifference`).html(`${- Math.abs(averageTempDifference)}°C`);
   $(`li.maxTempDifference`).html(`${-Math.abs(maxTempDifference)}°C`);
   $(`li.minTempDifference`).html(`${-Math.abs(minTempDifference)}°C`);
-  $(`p.cityVsMars`).html(`${cityResult[0].name} vs. Mars`)
+  $(`p.cityVsMars`).html(`${cityResult[0].name} vs. Mars`);
 
   weatherCompare.toggleTheTemperature(cityAvgTemperature, cityMaxTemperature, cityMinTemperature, avgMarsTemp, maxMarsTemp, minMarsTemp, averageTempDifference, maxTempDifference, minTempDifference);
 };
@@ -122,98 +122,91 @@ weatherCompare.addDifferenceData = function (avgMarsTemp, maxMarsTemp, minMarsTe
 // 
 weatherCompare.toggleTheTemperature = function (cityAvgTemperature, cityMaxTemperature, cityMinTemperature, marsAvgTemperature, marsMaxTemperature, marsMinTemperature, averageTempDifference, maxTempDifference, minTempDifference){
 
-  $(".toggleTempScale").on("click", function(){
-    if ($("ul.scale").hasClass("celsius") === true) {
-      $("li.marsAverage").html(`${marsAvgTemperature}°C`);
-      $("li.marsMax").html(`${marsMaxTemperature}°C`);
-      $("li.marsMin").html(`${marsMinTemperature}°C`);
+  $(`.toggleTempScale`).on(`click`, function(){
+    if ($(`ul.scale`).hasClass(`celsius`) === true) {
+      $(`li.marsAverage`).html(`${marsAvgTemperature}°C`);
+      $(`li.marsMax`).html(`${marsMaxTemperature}°C`);
+      $(`li.marsMin`).html(`${marsMinTemperature}°C`);
       //
-      $("li.cityAverage").html(`${cityAvgTemperature}°C`);
-      $("li.cityMax").html(`${cityMaxTemperature}°C`);
-      $("li.cityMin").html(`${cityMinTemperature}°C`);
+      $(`li.cityAverage`).html(`${cityAvgTemperature}°C`);
+      $(`li.cityMax`).html(`${cityMaxTemperature}°C`);
+      $(`li.cityMin`).html(`${cityMinTemperature}°C`);
       //
-      $("li.averageTempDifference").html(`${- Math.abs(averageTempDifference)}°C`);
-      $("li.maxTempDifference").html(`${-Math.abs(maxTempDifference)}°C`);
-      $("li.minTempDifference").html(`${-Math.abs(minTempDifference)}°C`);
+      $(`li.averageTempDifference`).html(`${- Math.abs(averageTempDifference)}°C`);
+      $(`li.maxTempDifference`).html(`${-Math.abs(maxTempDifference)}°C`);
+      $(`li.minTempDifference`).html(`${-Math.abs(minTempDifference)}°C`);
 
     } else {
-      $("li.marsAverage").html(`${(marsAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $("li.marsMax").html(`${(marsMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $("li.marsMin").html(`${(marsMinTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.marsAverage`).html(`${(marsAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.marsMax`).html(`${(marsMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.marsMin`).html(`${(marsMinTemperature * 1.8 + 32).toFixed(2)}°F`);
       //
-      $("li.cityAverage").html(`${(cityAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $("li.cityMax").html(`${(cityMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $("li.cityMin").html(`${(cityMinTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.cityAverage`).html(`${(cityAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.cityMax`).html(`${(cityMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
+      $(`li.cityMin`).html(`${(cityMinTemperature * 1.8 + 32).toFixed(2)}°F`);
       //
-      $("li.averageTempDifference").html(`${- Math.abs((averageTempDifference * 1.8 + 32).toFixed(2))}°F`);
-      $("li.maxTempDifference").html(`${-Math.abs((maxTempDifference * 1.8 + 32).toFixed(2))}°F`);
-      $("li.minTempDifference").html(`${-Math.abs((minTempDifference * 1.8 + 32).toFixed(2))}°F`);
-    }
-  })
-}
+      $(`li.averageTempDifference`).html(`${- Math.abs((averageTempDifference * 1.8 + 32).toFixed(2))}°F`);
+      $(`li.maxTempDifference`).html(`${-Math.abs((maxTempDifference * 1.8 + 32).toFixed(2))}°F`);
+      $(`li.minTempDifference`).html(`${-Math.abs((minTempDifference * 1.8 + 32).toFixed(2))}°F`);
+    };
+  });
+};
 // 
 
 weatherCompare.getUserInput = function () {
   const marsWeatherFunction = weatherCompare.getMarsWeather();
 
-  $("form.cityWeather").on("submit", function (event) {
+  $(`form.cityWeather`).on(`submit`, function (event) {
     event.preventDefault();
-    userCity = $(".cityWeather input").val();
+    userCity = $(`.cityWeather input`).val();
 
-    if ($(".volumeButton").hasClass("volumeOff") === false){
+    if ($(`.volumeButton`).hasClass(`volumeOff`) === false){
           audioElement.play();
-    }
+    };
 
-    $("input").val('');
+    $(`input`).val(``);
 
-    if (userCity !== "") {
+    if (userCity !== ``) {
       const userCityWeather = weatherCompare.getCityWeather(userCity);
 
-      $(".majorTom").addClass("displayNone");
-      $("div.atomPreloader").removeClass("displayNone");
+      $(`.majorTom`).addClass(`displayNone`);
+      $(`div.atomPreloader`).removeClass(`displayNone`);
       // 
       $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
 
         weatherCompare.addCityData(cityData, userCity);
         weatherCompare.addMarsData(cityData, marsData);
 
-        $("#resultsSection").removeClass("displayNone");
+        $(`#resultsSection`).removeClass(`displayNone`);
       }).then(function () {
-        weatherCompare.typedHeader = new Typed('#typed-text', {
-          strings: ['', 'Greetings Earthling 👽', 'Based on your location...', 'You vs. Martian Weather'
+        weatherCompare.typedHeader = new Typed(`#typed-text`, {
+          strings: [``, `Greetings Earthling 👽`, `You vs. Martian Weather`
           ],
-          typeSpeed: 75,
+          typeSpeed: 65,
           backSpeed: 25,
           bindInputFocusEvents: true,
           loop: false,
-          cursorChar: '',
+          cursorChar: ``,
           backDelay: 1000,
           startDelay: 0,
         });
 
         setTimeout(function () { 
-          $(".majorTom").removeClass("displayNone");
-          $("div.atomPreloader").addClass("displayNone");
-        // 
-          $("html,body").animate({
-            scrollTop: $("#resultsSection").offset().top
-          },
-            300,
-            "linear"
-          );
-        // 
-        }, 
-          500);
-        // 
+          $(`.majorTom`).removeClass(`displayNone`);
+          $(`div.atomPreloader`).addClass(`displayNone`);
+          $(`html,body`).animate({
+            scrollTop: $(`#resultsSection`).offset().top
+          }, 300, `linear`);
+        }, 500);
       })
         .fail(function(){
-          $(".majorTom").removeClass("displayNone");
-          $("div.atomPreloader").addClass("displayNone");
-          Swal.fire("Please check your spelling or enter another city")
+          $(`.majorTom`).removeClass(`displayNone`);
+          $(`div.atomPreloader`).addClass(`displayNone`);
+          Swal.fire(`Please check your spelling or enter another city`)
         })
     } else {
-      Swal.fire("Input cannot be left blank");
-    }
+      Swal.fire(`Input cannot be left blank`);
+    };
   });
 };
 
