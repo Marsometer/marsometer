@@ -3,8 +3,14 @@
   align-items: center;
 }
 
-@mixin width-800px {
-  @media (min-width: 800px) { 
+@mixin width-666px {
+  @media (min-width: 666px) {
+    @content
+  };
+};
+
+@mixin width-850px {
+  @media (min-width: 850px) { 
     @content 
-  }
-}
+  };
+};

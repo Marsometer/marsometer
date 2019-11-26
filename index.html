@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="./styles/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/4195f42b5c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
     <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="script.js"></script>
@@ -19,27 +22,33 @@
 <body>
     <header>
         <div class="headerContent wrapper">
-            <h1>Major Temp</h1>
-            <!-- <p>Ground Control to Major Temp</p> -->
-            <img class="majorTom" src="https://media.giphy.com/media/h8mB9WD5K406EM1wn2/giphy.gif" alt="">
+            <h1>Mars-o-meter</h1>
+
+            <label for="volumeButton" class="visuallyHidden">The volume button (volume off by default)</label>
+            <button id="volumeButton" class="volumeButton volumeOff" aria-pressed="false">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+
+            <img class="majorTom" src="https://media.giphy.com/media/h8mB9WD5K406EM1wn2/giphy.gif" alt="An astronaut pointing downwards">
 
             <div class="atomPreloader displayNone">
-                <img src="./assets/atomPreloader.svg" alt="">
-                <p>Retrieving Data From Mars</p>
+                <img src="./assets/atomPreloader.svg" alt="" class="preloaderImage" aria-hidden="true">
+                <p>Retrieving Data From Mars...</p>
             </div>
 
             <form action="" class="cityWeather">
                 <label for="cityWeatherInput" name="cityWeather" class="visuallyHidden">Enter A City</label>
                 <input type="text" id="cityWeatherInput" name="cityWeather" placeholder="Enter a city"
                 autocomplete="off">
-                <button type="submit" name="cityWeather" class="cityWeatherInput">Commencing Countdown Engines On..</button>
+                <label for="submitButton" class="visuallyHidden">The Submit Button</label>
+                <button type="submit" name="cityWeather" id="submitButton"  class="cityWeatherInput">Commencing Countdown Engines On..</button>
             </form>
         </div>
     </header>
     <div id="resultsSection" class="resultsSection displayNone">
         <main>
             <div class="wrapper">
-                <h2>Results</h2>
+                <h2 id="typed-text"></h2>
                 <div class="resultsContainer">
                     <section class="cityResults">
                         <h3>Earth</h3>
@@ -51,7 +60,7 @@
                                 <li>Min:</li>
                                 <li>Max:</li>
                             </ul>
-                            <ul>
+                            <ul class="scale celsius">
                                 <li class="cityAverage"></li>
                                 <li class="cityMin"></li>
                                 <li class="cityMax"></li>
@@ -68,7 +77,7 @@
                                 <li>Min:</li>
                                 <li>Max:</li>
                             </ul>
-                            <ul>
+                            <ul class="scale celsius">
                                 <li class="marsAverage"></li>
                                 <li class="marsMin"></li>
                                 <li class="marsMax"></li>
@@ -77,13 +86,15 @@
                     </section>
                     <section class="difference">
                         <h3>Difference</h3>
+                        <p class="cityVsMars"></p>
+                        <img src="./assets/weatherCompare.png" alt="An astronaut in space surrounded by thermometers">
                         <div class="resultsList">
                             <ul>
                                 <li>Avg:</li>
                                 <li>Min:</li>
                                 <li>Max:</li>
                             </ul>
-                            <ul>
+                            <ul class="scale celsius">
                                 <li class="averageTempDifference"></li>
                                 <li class="minTempDifference"></li>
                                 <li class="maxTempDifference"></li>
@@ -91,10 +102,12 @@
                         </div>
                     </section>
                 </div>
+                <label for="toggleButton" class="visuallyHidden">Toggle the temperature between celsius and fahrenheit</label>
+                <button id="toggleButton" class="toggleTempScale">Toggle Temperature Scale</button>
             </div>
         </main>
         <footer>
-            <p>Copyright © 2019 Marsometer</p>
+            <p>Copyright <span class="copyright">©</span> 2019 Marsometer |  <a href="http://www.bethancdavies.com">Bethan</a> and <a href="https://jameslewis.io/">James</a></p>
         </footer>
         </div>
 </body>

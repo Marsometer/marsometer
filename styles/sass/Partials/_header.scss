@@ -30,11 +30,31 @@ header {
   }
 
   img {
-    width: 80%;
+    width: 75%;
     height: auto;
     max-width: 400px;
-    min-width: 200px;
+    min-width: 190px;
+    &.preloaderImage {
+      width: 65%;
+    }
   };
+
+  .volumeButton {
+    font-size: 2rem;
+    color: white;
+    background: none;
+    border: none;
+    text-shadow: 2px 2px lighten($color: $hightlightColor, $amount: 50);
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+    @include width-850px {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+    }
+  }
 };
 
 form {
@@ -69,6 +89,9 @@ form {
     padding: 10px;
     &:hover {
       background: lighten($color: $hightlightColor, $amount: 50);
+      transform: scale(1.05);
+      cursor: pointer;
     };
   };
-};
+}; 
+
