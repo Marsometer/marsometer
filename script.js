@@ -184,8 +184,8 @@ app.onSuccess = () => {
 
 app.smoothScrollDown = () => {
   setTimeout(() => {
-    $majorTom.removeClass(`displayNone`);
-    $atomPreloader.addClass(`displayNone`);
+    $majorTom.removeClass(`displayNone`)
+    $atomPreloader.addClass(`displayNone`)
 
     $(`html,body`).animate({
       scrollTop: $(`#resultsSection`).offset().top
