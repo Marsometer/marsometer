@@ -25,7 +25,6 @@ let cityFahrenheitObject = {}
 
 let audioElement = document.createElement(`audio`)
 audioElement.setAttribute(`src`, `./assets/audioClip/eagleHasLanded.mp3`)
-audioElement.play()
 
 // Toggles volume on/off
 app.volumeButton = () => {
