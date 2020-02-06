@@ -1,238 +1,250 @@
-const app = {};
+const app = {}
 
-const marsApiKey = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`;
-const weatherApiKey = `8f12648509075ad5f7b59b7ecc23f813`;
+let marsApiKey = `EwwwPaMx8qEpAqWR0mgPxqaVTDLBFsckriIbLtgc`
+let weatherApiKey = `8f12648509075ad5f7b59b7ecc23f813`
 
-const audioElement = document.createElement(`audio`);
-audioElement.setAttribute(`src`, `./assets/audioClip/eagleHasLanded.mp3`);
-audioElement.play();
+let $volumeButton = $(`.volumeButton`)
+let $majorTom = $(`.majorTom`)
+let $atomPreloader = $(`div.atomPreloader`)
+let $cityPhoto = $(`.cityPhoto`)
+let $marsAverage = $(`li.marsAverage`)
+let $marsMax = $(`li.marsMax`)
+let $marsMin = $(`li.marsMin`)
+let $cityAverage = $(`li.cityAverage`)
+let $cityMax = $(`li.cityMax`)
+let $cityMin = $(`li.cityMin`)
+let $averageDifference = $(`li.averageTempDifference`)
+let $maxDifference = $(`li.maxTempDifference`)
+let $minDifference = $(`li.minTempDifference`)
 
-// Volume button toggles between volume-up/volume-mute on click.
-app.volumeButton = function(){
-  $(`.volumeButton`).on(`click`, function(){
-    $(`.volumeButton`).toggleClass(`volumeOff`);
+let marsDateArray = []
+let marsCelsiusObject = {}
+let marsFahrenheitObject = {}
+let cityCelsiusObject = {}
+let cityFahrenheitObject = {}
+
+let audioElement = document.createElement(`audio`)
+audioElement.setAttribute(`src`, `./assets/audioClip/eagleHasLanded.mp3`)
+audioElement.play()
+
+// Toggles volume on/off
+app.volumeButton = () => {
+  $volumeButton.on(`click`, () => {
+    $volumeButton.toggleClass(`volumeOff`)
     $(`.volumeButton i`).toggleClass(`fas-volume-mute, fa-volume-up`)
-  });
-};
-
-// Temperature scale button toggles class on click.
-app.temperatureToggle = function(){
-  $(`.toggleTempScale`).on(`click`, function(event){
-    event.preventDefault();
-    $(`.scale`).toggleClass(`celsius`);
   })
 }
 
-// Retrieves temperature/weather from NASA's Insight API. Sometimes takes a minute!
-app.getMarsWeather = function () {
+app.playAudio = () => {
+  if ($volumeButton.hasClass(`volumeOff`) === false) {
+    audioElement.play()
+  }
+}
+
+// Retrieves Mars' temperature from NASA's Insight API
+app.getMarsWeather = () => {
   const marsWeatherResults = $.ajax({
     url: `https://api.nasa.gov/insight_weather/?api_key=${marsApiKey}&feedtype=json&ver=1.0`,
     method: `GET`,
     dataType: `json`,
-  });
-  return marsWeatherResults;
-};
+  })
+  return marsWeatherResults
+}
 
-// Retrieves city temperature/weather from openweathermap.org
-app.getCityWeather = function (userCity) {
+// Retrieves city temperature from openweathermap.org
+app.getCityWeather = userCity => {
   const cityWeatherResults = $.ajax({
     url: `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${weatherApiKey}`,
     method: `GET`,
     dataType: `json`
   });
-  return cityWeatherResults;
+  return cityWeatherResults
 };
 
 // Retrieves city photo from teleport.org.
-app.getCityPhoto = function (userCity) {
-  const formattedCity = userCity.replace(` `, `-`);
+app.getCityPhoto = userCity => {
+  const formattedCity = userCity.replace(` `, `-`)
 
   const cityPhotoResult = $.ajax({
     url: `https://api.teleport.org/api/urban_areas/slug:${formattedCity.toLowerCase()}/images/`,
     method: `GET`,
     dataType: `json`,
   });
-  return cityPhotoResult;
+  return cityPhotoResult
 }
 
-// Appends city photo from teleport.org.
-app.addCityPhoto = function (cityPhotoResult, userCity) {
+app.addCityPhoto = (cityPhotoResult, userCity) => {
   const cityPhotoToAppend = cityPhotoResult.photos[0].image.mobile;
 
-  $(`.cityPhoto`).html(`<img class="cityImage" src="${cityPhotoToAppend}" alt="A photo of ${userCity}">`);
+  $cityPhoto.html(`<img class="cityImage" src="${cityPhotoToAppend}" alt="A photo of ${userCity}">`)
 }
 
-// Appends generic Sims photo (hehe) if app.getCityPhoto does not work.
-app.addCityPhotoCatch = function (userCity) {
-  $(`.cityPhoto`).html(`<img class="cityImage" src="./assets/genericCity.jpg" alt="A photo of a generic city, as ${userCity} did not have one available">`);
+app.addCityPhotoCatch = userCity => {
+  $cityPhoto.html(`<img class="cityImage" src="./assets/genericCity.jpg" alt="A photo of a generic city, as ${userCity} did not have one available">`)
 }
 
-// Appends Mars' weather data to the page & sends data to app.addDifferenceData to calculate the difference between Mars' temperature and the user city's temperature.
-app.addMarsData = function (cityResult, marsResult) {
-  const marsDataObject = marsResult[0]
-  let marsDateArray = [];
-
-  for (key in marsDataObject) {
-    keyNumber = parseInt(key);
-    if (keyNumber > 0) {
-      marsDateArray.push(keyNumber);
-    };
-  };
-
-  let marsCurrentDay = Math.max(...marsDateArray);
+// Converts returned Mars data into two easy-to-use objects
+app.formatMarsData = marsResult => {
+  for (key in marsResult[0]) {
+    if (key > 0) {
+      marsDateArray.push(key)
+    }
+  }
   
-  const marsAvgTemperature = ((marsResult[0][marsCurrentDay].AT.av - 32) * 5 / 9).toFixed(2);
-  const marsMaxTemperature = ((marsResult[0][marsCurrentDay].AT.mx - 32) * 5 / 9).toFixed(2);
-  const marsMinTemperature = ((marsResult[0][marsCurrentDay].AT.mn - 32) * 5 / 9).toFixed(2);
+  marsFahrenheitObject = marsResult[0][Math.max(...marsDateArray)].AT
+  
+  for (const temperature in marsFahrenheitObject) {
+    marsFahrenheitObject[temperature] = parseFloat(marsFahrenheitObject[temperature].toFixed(2))
+  }
 
-  $(`li.marsAverage`).html(`${marsAvgTemperature}°C`);
-  $(`li.marsMax`).html(`${marsMaxTemperature}°C`);
-  $(`li.marsMin`).html(`${marsMinTemperature}°C`);
+  marsCelsiusObject = { ...marsFahrenheitObject }
+  
+  for (const temperature in marsCelsiusObject) {
+    marsCelsiusObject[temperature] = parseFloat(((marsCelsiusObject[temperature] - 32) * 5 / 9).toFixed(2))
+  }
+}
 
-  app.addDifferenceData(marsAvgTemperature, marsMaxTemperature, marsMinTemperature, cityResult);
-};
-
-// Appends user city's temperature to the page.
-app.addCityData = function (cityResult, userCity) {
-  const userCityPhoto = app.getCityPhoto(userCity);
-  $.when(userCityPhoto)
-    .done(function (cityPhotoResult) {
-      app.addCityPhoto(cityPhotoResult, userCity);
+// Converts returned city data into two easy-to-use objects
+app.formatCityData = (cityResult, userCity) => {
+  $.when(app.getCityPhoto(userCity))
+    .done(cityPhotoResult => {
+      app.addCityPhoto(cityPhotoResult, userCity)
     })
     .fail(app.addCityPhotoCatch(userCity));
 
-  let cityName = cityResult[0].name;
-  let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
-  let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
-  let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
+  cityCelsiusObject = cityResult[0].main
+  
+  for (temperature in cityCelsiusObject){
+    cityCelsiusObject[temperature] = parseFloat((cityCelsiusObject[temperature] - 273.15).toFixed(2))
+  }
 
-  $(`p.cityTitle`).html(cityName);
-  $(`li.cityAverage`).html(`${cityAvgTemperature}°C`);
-  $(`li.cityMax`).html(`${cityMaxTemperature}°C`);
-  $(`li.cityMin`).html(`${cityMinTemperature}°C`);
+  cityFahrenheitObject = { ...cityCelsiusObject }
+
+  for (temperature in cityFahrenheitObject) {
+    cityFahrenheitObject[temperature] = parseFloat(((cityFahrenheitObject[temperature] * 9 / 5) + 32).toFixed(2))
+  }
+
+  $(`p.cityTitle`).html(cityResult[0].name)
+  $(`p.cityVsMars`).html(`${cityResult[0].name} vs. Mars`)
 };
 
-// Appends difference between Mars' and user city's temperature to the page & sends data to the app.toggleTheTemperature function.
-app.addDifferenceData = function (avgMarsTemp, maxMarsTemp, minMarsTemp, cityResult) {
-  let cityAvgTemperature = (cityResult[0].main.temp - 273.15).toFixed(2);
-  let cityMaxTemperature = (cityResult[0].main.temp_max - 273.15).toFixed(2);
-  let cityMinTemperature = (cityResult[0].main.temp_min - 273.15).toFixed(2);
+app.appendCelsius = () => {
+  $marsAverage.html(`${marsCelsiusObject.av}°C`)
+  $marsMax.html(`${marsCelsiusObject.mx}°C`)
+  $marsMin.html(`${marsCelsiusObject.mn}°C`)
+  $cityAverage.html(`${cityCelsiusObject.temp}°C`)
+  $cityMax.html(`${cityCelsiusObject.temp_max}°C`)
+  $cityMin.html(`${cityCelsiusObject.temp_min}°C`)
+  $averageDifference.html(`${(marsCelsiusObject.av - cityCelsiusObject.temp).toFixed(2)}°C`)
+  $maxDifference.html(`${(marsCelsiusObject.mx - cityCelsiusObject.temp_max).toFixed(2)}°C`)
+  $minDifference.html(`${(marsCelsiusObject.mn - cityCelsiusObject.temp_min).toFixed(2)}°C`)
+}
 
-  const averageTempDifference = (cityAvgTemperature - avgMarsTemp).toFixed(2);
-  const maxTempDifference = (cityMaxTemperature - maxMarsTemp).toFixed(2);
-  const minTempDifference = (cityMinTemperature - minMarsTemp).toFixed(2);
+app.appendFahrenheit = () => {
+  $marsAverage.html(`${marsFahrenheitObject.av}°F`)
+  $marsMax.html(`${marsFahrenheitObject.mx}°F`)
+  $marsMin.html(`${marsFahrenheitObject.mn}°F`)
+  $cityAverage.html(`${cityFahrenheitObject.temp}°F`)
+  $cityMax.html(`${cityFahrenheitObject.temp_max}°F`)
+  $cityMin.html(`${cityFahrenheitObject.temp_min}°F`)
+  $averageDifference.html(`${(marsFahrenheitObject.av - cityFahrenheitObject.temp).toFixed(2)}°F`)
+  $maxDifference.html(`${(marsFahrenheitObject.mx - cityFahrenheitObject.temp_max).toFixed(2)}°F`)
+  $minDifference.html(`${(marsFahrenheitObject.mn - cityFahrenheitObject.temp_min).toFixed(2)}°F`)
+}
 
-  $(`li.averageTempDifference`).html(`${- Math.abs(averageTempDifference)}°C`);
-  $(`li.maxTempDifference`).html(`${-Math.abs(maxTempDifference)}°C`);
-  $(`li.minTempDifference`).html(`${-Math.abs(minTempDifference)}°C`);
-  $(`p.cityVsMars`).html(`${cityResult[0].name} vs. Mars`);
+app.convertToFahrenheit = (marsArray, cityArray) => {
+  marsTemperatureFahrenheit = marsArray.map(item => {
+    return item * 9 / 5 + 32
+  })
+  cityTemperatureFahrenheit = cityArray.map(item => {
+    return item * 9 / 5 + 32
+  })
+}
 
-  app.toggleTheTemperature(cityAvgTemperature, cityMaxTemperature, cityMinTemperature, avgMarsTemp, maxMarsTemp, minMarsTemp, averageTempDifference, maxTempDifference, minTempDifference);
-};
+app.temperatureToggle = () => {
+  $(`.toggleTempScale`).on(`click`, e => {
+    e.preventDefault()
+    $(`.scale`).toggleClass(`celsius`)
 
-// Toggles temperature between C and F.
-app.toggleTheTemperature = function (cityAvgTemperature, cityMaxTemperature, cityMinTemperature, marsAvgTemperature, marsMaxTemperature, marsMinTemperature, averageTempDifference, maxTempDifference, minTempDifference){
-
-  $(`.toggleTempScale`).on(`click`, function(){
     if ($(`ul.scale`).hasClass(`celsius`) === true) {
-      $(`li.marsAverage`).html(`${marsAvgTemperature}°C`);
-      $(`li.marsMax`).html(`${marsMaxTemperature}°C`);
-      $(`li.marsMin`).html(`${marsMinTemperature}°C`);
-      //
-      $(`li.cityAverage`).html(`${cityAvgTemperature}°C`);
-      $(`li.cityMax`).html(`${cityMaxTemperature}°C`);
-      $(`li.cityMin`).html(`${cityMinTemperature}°C`);
-      //
-      $(`li.averageTempDifference`).html(`${- Math.abs(averageTempDifference)}°C`);
-      $(`li.maxTempDifference`).html(`${-Math.abs(maxTempDifference)}°C`);
-      $(`li.minTempDifference`).html(`${-Math.abs(minTempDifference)}°C`);
-
+      app.appendCelsius()
     } else {
-      $(`li.marsAverage`).html(`${(marsAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $(`li.marsMax`).html(`${(marsMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $(`li.marsMin`).html(`${(marsMinTemperature * 1.8 + 32).toFixed(2)}°F`);
-      //
-      $(`li.cityAverage`).html(`${(cityAvgTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $(`li.cityMax`).html(`${(cityMaxTemperature * 1.8 + 32).toFixed(2)}°F`);
-      $(`li.cityMin`).html(`${(cityMinTemperature * 1.8 + 32).toFixed(2)}°F`);
-      //
-      $(`li.averageTempDifference`).html(`${- Math.abs((averageTempDifference * 1.8 + 32).toFixed(2))}°F`);
-      $(`li.maxTempDifference`).html(`${-Math.abs((maxTempDifference * 1.8 + 32).toFixed(2))}°F`);
-      $(`li.minTempDifference`).html(`${-Math.abs((minTempDifference * 1.8 + 32).toFixed(2))}°F`);
-    };
-  });
-};
-// 
+      app.appendFahrenheit()
+    }
+  })
+}
 
-// Get user input then make AJAX calls.
-app.getUserInput = function () {
-  const marsWeatherFunction = app.getMarsWeather();
+// Runs if API calls are successful
+app.onSuccess = () => {
+  app.playAudio()
+  app.appendCelsius()
+  app.temperatureToggle()
+  $(`#resultsSection`).removeClass(`displayNone`)
+}
 
-  $(`form.cityWeather`).on(`submit`, function (event) {
-    event.preventDefault();
-    userCity = $(`.cityWeather input`).val();
-    $(`input`).val(``);
+app.smoothScrollDown = () => {
+  setTimeout(() => {
+    $majorTom.removeClass(`displayNone`);
+    $atomPreloader.addClass(`displayNone`);
 
+    $(`html,body`).animate({
+      scrollTop: $(`#resultsSection`).offset().top
+    }, 300, `linear`)
+  }, 500)
+  $(`h2`).removeAttr(`id`)
+}
+
+app.getUserInput = () => {
+  $(`form.cityWeather`).on(`submit`, e => {
+    e.preventDefault()
+
+    userCity = $(`.cityWeather input`).val()
+    $(`input`).val(``)
+    
     if (userCity !== ``) {
-      const userCityWeather = app.getCityWeather(userCity);
+      const userCityWeather = app.getCityWeather(userCity)
+      const marsWeatherFunction = app.getMarsWeather()
 
-      $(`.majorTom`).addClass(`displayNone`);
-      $(`div.atomPreloader`).removeClass(`displayNone`);
+      $majorTom.addClass(`displayNone`)
+      $atomPreloader.removeClass(`displayNone`)
       // 
-      $.when(userCityWeather, marsWeatherFunction).done(function (cityData, marsData) {
-        // Plays audio
-        if ($(`.volumeButton`).hasClass(`volumeOff`) === false) {
-          audioElement.play();
-        };
+      $.when(userCityWeather, marsWeatherFunction).done((cityData, marsData) => {
+        const formatCityData = app.formatCityData(cityData, userCity)
+        const formatMarsData = app.formatMarsData(marsData)
 
-        app.addCityData(cityData, userCity);
-        app.addMarsData(cityData, marsData);
-
-        $(`#resultsSection`).removeClass(`displayNone`);
-
-        // typed.js
-        app.typedHeader = new Typed(`#typed-text`, {
-          strings: [``, `Greetings, Earthling 👽`, `You vs. Martian Weather`
-          ],
-          typeSpeed: 65,
-          backSpeed: 25,
-          bindInputFocusEvents: true,
-          loop: false,
-          cursorChar: ``,
-          backDelay: 1000,
-          startDelay: 0,
-        });
-      }).then(function () {
-        setTimeout(function () { 
-          $(`.majorTom`).removeClass(`displayNone`);
-          $(`div.atomPreloader`).addClass(`displayNone`);
-
-          // Scrolls down
-          $(`html,body`).animate({
-            scrollTop: $(`#resultsSection`).offset().top
-          }, 300, `linear`);
-        }, 500);
-        $(`h2`).removeAttr(`id`);
-      })
-        .fail(function(){
-          $(`.majorTom`).removeClass(`displayNone`);
-          $(`div.atomPreloader`).addClass(`displayNone`);
-          Swal.fire(`Please check your spelling or enter another city`)
+        $.when(formatCityData, formatMarsData).done(() => {
+          app.onSuccess()
+  
+          app.typedHeader = new Typed(`#typed-text`, {
+            strings: [``, `Greetings, Earthling 👽`, `You vs. Martian Weather`
+            ],
+            typeSpeed: 65,
+            backSpeed: 25,
+            bindInputFocusEvents: true,
+            loop: false,
+            cursorChar: ``,
+            backDelay: 1000,
+            startDelay: 0,
+          })
+        }).then(() => {
+            app.smoothScrollDown()
         })
+      }).fail(() => {
+              $majorTom.removeClass(`displayNone`)
+              $atomPreloader.addClass(`displayNone`)
+              Swal.fire(`Please check your spelling or enter another city`)
+            })
     } else {
-      Swal.fire(`Input cannot be left blank`);
-    };
-  });
-};
+      Swal.fire(`Input cannot be left blank`)
+    }
+  })
+}
 
-// App.init
-app.init = function() {
-  app.volumeButton();
-  app.getUserInput();
-  app.temperatureToggle();
-};
+app.init = () => {
+  app.volumeButton()
+  app.getUserInput()
+}
 
-// Document Ready
-$(function () {
-  app.init();
-});
+$(() => {
+  app.init()
+})
