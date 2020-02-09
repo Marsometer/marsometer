@@ -151,15 +151,6 @@ app.appendFahrenheit = () => {
   $minDifference.html(`${(marsFahrenheitObject.mn - cityFahrenheitObject.temp_min).toFixed(2)}°F`)
 }
 
-app.convertToFahrenheit = (marsArray, cityArray) => {
-  marsTemperatureFahrenheit = marsArray.map(item => {
-    return item * 9 / 5 + 32
-  })
-  cityTemperatureFahrenheit = cityArray.map(item => {
-    return item * 9 / 5 + 32
-  })
-}
-
 app.temperatureToggle = () => {
   $(`.toggleTempScale`).on(`click`, e => {
     e.preventDefault()
