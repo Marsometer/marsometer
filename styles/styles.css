@@ -322,6 +322,7 @@ a {
 
 header {
   height: 100vh;
+  min-height: 500px;
   background-image: url(../assets/background.jpg);
   background-size: cover;
   background-attachment: fixed;
@@ -492,12 +493,6 @@ form button:hover, form button:focus {
 .resultsSection footer {
   height: 7.5%;
   padding: 5px;
-}
-
-@media (min-width: 850px) {
-  .resultsSection {
-    height: 100vh;
-  }
 }
 
 .resultsContainer {
