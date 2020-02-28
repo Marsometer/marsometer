@@ -128,27 +128,33 @@ app.formatCityData = (cityResult, userCity) => {
 };
 
 app.appendCelsius = () => {
-  $marsAverage.html(`${marsCelsiusObject.av}°C`)
-  $marsMax.html(`${marsCelsiusObject.mx}°C`)
-  $marsMin.html(`${marsCelsiusObject.mn}°C`)
-  $cityAverage.html(`${cityCelsiusObject.temp}°C`)
-  $cityMax.html(`${cityCelsiusObject.temp_max}°C`)
-  $cityMin.html(`${cityCelsiusObject.temp_min}°C`)
-  $averageDifference.html(`${(marsCelsiusObject.av - cityCelsiusObject.temp).toFixed(2)}°C`)
-  $maxDifference.html(`${(marsCelsiusObject.mx - cityCelsiusObject.temp_max).toFixed(2)}°C`)
-  $minDifference.html(`${(marsCelsiusObject.mn - cityCelsiusObject.temp_min).toFixed(2)}°C`)
+  let { av, mx, mn } = marsCelsiusObject
+  let { temp, temp_max, temp_min } = cityCelsiusObject
+
+  $marsAverage.html(`${av}°C`)
+  $marsMax.html(`${mx}°C`)
+  $marsMin.html(`${mn}°C`)
+  $cityAverage.html(`${temp}°C`)
+  $cityMax.html(`${temp_max}°C`)
+  $cityMin.html(`${temp_min}°C`)
+  $averageDifference.html(`${(av - temp).toFixed(2)}°C`)
+  $maxDifference.html(`${(mx - temp_max).toFixed(2)}°C`)
+  $minDifference.html(`${(mn - temp_min).toFixed(2)}°C`)
 }
 
 app.appendFahrenheit = () => {
-  $marsAverage.html(`${marsFahrenheitObject.av}°F`)
-  $marsMax.html(`${marsFahrenheitObject.mx}°F`)
-  $marsMin.html(`${marsFahrenheitObject.mn}°F`)
-  $cityAverage.html(`${cityFahrenheitObject.temp}°F`)
-  $cityMax.html(`${cityFahrenheitObject.temp_max}°F`)
-  $cityMin.html(`${cityFahrenheitObject.temp_min}°F`)
-  $averageDifference.html(`${(marsFahrenheitObject.av - cityFahrenheitObject.temp).toFixed(2)}°F`)
-  $maxDifference.html(`${(marsFahrenheitObject.mx - cityFahrenheitObject.temp_max).toFixed(2)}°F`)
-  $minDifference.html(`${(marsFahrenheitObject.mn - cityFahrenheitObject.temp_min).toFixed(2)}°F`)
+  let { av, mx, mn } = marsFahrenheitObject
+  let { temp, temp_max, temp_min } = cityFahrenheitObject
+
+  $marsAverage.html(`${av}°F`)
+  $marsMax.html(`${mx}°F`)
+  $marsMin.html(`${mn}°F`)
+  $cityAverage.html(`${temp}°F`)
+  $cityMax.html(`${temp_max}°F`)
+  $cityMin.html(`${temp_min}°F`)
+  $averageDifference.html(`${(av - temp).toFixed(2)}°F`)
+  $maxDifference.html(`${(mx - temp_max).toFixed(2)}°F`)
+  $minDifference.html(`${(mn - temp_min).toFixed(2)}°F`)
 }
 
 app.temperatureToggle = () => {
